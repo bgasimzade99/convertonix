@@ -1,0 +1,49 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#334155;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#475569;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="text" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#e0e7ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#c7d2fe;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  
+  <!-- Geometric pattern -->
+  <circle cx="200" cy="150" r="100" fill="#4f46e5" opacity="0.1"/>
+  <circle cx="1000" cy="500" r="120" fill="#7c3aed" opacity="0.1"/>
+  <circle cx="600" cy="315" r="150" fill="#fbbf24" opacity="0.05"/>
+  
+  <!-- Logo -->
+  <polygon points="150,200 200,230 200,290 150,320 100,290 100,230" fill="#1e293b" stroke="#4f46e5" stroke-width="2" opacity="0.8"/>
+  <polygon points="150,220 180,240 180,280 150,300 120,280 120,240" fill="#4f46e5" opacity="0.3"/>
+  
+  <!-- Text -->
+  <text x="280" y="280" font-family="Inter, Arial" font-size="80" font-weight="900" fill="url(#text)">
+    Convertonix
+  </text>
+  
+  <text x="280" y="340" font-family="Inter, Arial" font-size="32" font-weight="600" fill="rgba(255,255,255,0.8)">
+    Professional AI-Powered File Converter
+  </text>
+  
+  <!-- Features -->
+  <text x="280" y="420" font-family="Inter, Arial" font-size="24" font-weight="600" fill="rgba(255,255,255,0.7)">
+    ⚡ AI Generation • 🔒 Privacy-First • 💎 Pro Quality
+  </text>
+  
+  <!-- Badge -->
+  <rect x="950" y="50" width="200" height="60" rx="30" fill="#fbbf24"/>
+  <text x="1050" y="90" font-family="Inter, Arial" font-size="24" font-weight="900" fill="white" text-anchor="middle">
+    FREE TIER
+  </text>
+</svg>
+
+
+
