@@ -1,0 +1,78 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="onyxGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#334155;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#475569;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="indigoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4f46e5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Outer hexagon - Onyx crystal -->
+  <polygon 
+    points="100,15 175,57.5 175,142.5 100,185 25,142.5 25,57.5" 
+    fill="url(#onyxGradient)" 
+    stroke="url(#indigoGradient)" 
+    stroke-width="3"
+    filter="url(#glow)"
+  />
+  
+  <!-- Inner crystal facets -->
+  <polygon points="100,35 155,65 155,135 100,165 45,135 45,65" fill="white" opacity="0.05"/>
+  <polygon points="100,50 140,75 140,125 100,150 60,125 60,75" fill="url(#indigoGradient)" opacity="0.15"/>
+  
+  <!-- Central transformation symbol -->
+  <g transform="translate(100, 100)">
+    <!-- Circular arrows representing conversion -->
+    <path 
+      d="M -25,-15 Q -35,-5 -35,5 Q -35,15 -25,25" 
+      stroke="url(#indigoGradient)" 
+      stroke-width="7" 
+      stroke-linecap="round" 
+      fill="none"
+      opacity="0.9"
+    />
+    <path 
+      d="M 25,25 Q 35,15 35,5 Q 35,-5 25,-15" 
+      stroke="url(#indigoGradient)" 
+      stroke-width="7" 
+      stroke-linecap="round" 
+      fill="none"
+      opacity="0.9"
+    />
+    
+    <!-- Arrow heads -->
+    <polygon points="-30,25 -25,35 -20,25" fill="#4f46e5"/>
+    <polygon points="30,-15 25,-25 20,-15" fill="#4f46e5"/>
+    
+    <!-- Center diamond - transformation core -->
+    <polygon points="0,-12 12,0 0,12 -12,0" fill="url(#goldGradient)" filter="url(#glow)"/>
+    <polygon points="0,-8 8,0 0,8 -8,0" fill="white" opacity="0.4"/>
+  </g>
+  
+  <!-- Sparkle effects -->
+  <circle cx="150" cy="40" r="5" fill="url(#goldGradient)" opacity="0.9"/>
+  <path d="M150 33 L150 47 M143 40 L157 40" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+  
+  <circle cx="50" cy="160" r="4" fill="url(#goldGradient)" opacity="0.7"/>
+  <path d="M50 154 L50 166 M44 160 L56 160" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+  
+  <!-- Light rays -->
+  <line x1="100" y1="100" x2="100" y2="60" stroke="url(#indigoGradient)" stroke-width="2" opacity="0.3"/>
+  <line x1="100" y1="100" x2="130" y2="75" stroke="url(#indigoGradient)" stroke-width="2" opacity="0.3"/>
+  <line x1="100" y1="100" x2="70" y2="75" stroke="url(#indigoGradient)" stroke-width="2" opacity="0.3"/>
+</svg>
