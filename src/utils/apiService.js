@@ -3,51 +3,14 @@ const API_BASE_URL = 'http://localhost:5000/api'
 
 class ConversionAPI {
   async convertFile(file, inputFormat, outputFormat, options = {}) {
+    // Direkt client-side conversion kullan
+    console.log('🔄 Using client-side conversion directly')
+    
     try {
-      const formData = new FormData()
-      formData.append('file', file)
-      formData.append('inputFormat', inputFormat)
-      formData.append('outputFormat', outputFormat)
-      formData.append('quality', options.quality || 90)
-      
-      if (options.width) formData.append('width', options.width)
-      if (options.height) formData.append('height', options.height)
-      if (options.enhance) formData.append('enhance', options.enhance)
-      if (options.compress) formData.append('compress', options.compress)
-
-      const response = await fetch(`${API_BASE_URL}/conversion/convert`, {
-        method: 'POST',
-        body: formData
-      })
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-
-      const result = await response.json()
-      
-      if (!result.success) {
-        throw new Error(result.error || 'Conversion failed')
-      }
-
-      // Convert base64 back to blob
-      const binaryString = atob(result.data)
-      const bytes = new Uint8Array(binaryString.length)
-      for (let i = 0; i < binaryString.length; i++) {
-        bytes[i] = binaryString.charCodeAt(i)
-      }
-      
-      const blob = new Blob([bytes], { type: `application/${outputFormat}` })
-      
-      return {
-        blob,
-        filename: result.filename,
-        size: result.size,
-        format: result.format
-      }
-
+      const { convertFile } = await import('./converter')
+      return await convertFile(file, outputFormat, options)
     } catch (error) {
-      console.error('Conversion API error:', error)
+      console.error('Client-side conversion error:', error)
       throw error
     }
   }

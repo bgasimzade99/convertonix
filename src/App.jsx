@@ -29,7 +29,7 @@ const Support = lazy(() => import('./pages/Support'))
 const API = lazy(() => import('./pages/API'))
 const Blog = lazy(() => import('./pages/Blog'))
 
-function AppContent() {
+function AppContent({ generatedFile, setGeneratedFile }) {
   const [uploadedFiles, setUploadedFiles] = useState([])
   const [convertedFile, setConvertedFile] = useState(null)
   const [isConverting, setIsConverting] = useState(false)
@@ -41,6 +41,15 @@ function AppContent() {
   const [batchMode, setBatchMode] = useState(false)
 
   const { user, isPremium, canConvert, trackConversion, getRemainingConversions } = useAuth()
+
+  // Handle generated file from AI Chat
+  useEffect(() => {
+    if (generatedFile) {
+      setUploadedFiles([generatedFile])
+      setConvertedFile(null)
+      setGeneratedFile(null)
+    }
+  }, [generatedFile, setGeneratedFile])
   
   const [aiFeatures, setAiFeatures] = useState({
     ocr: false,
@@ -105,10 +114,25 @@ function AppContent() {
     console.log('Options:', options)
     console.log('Uploaded Files:', uploadedFiles)
     
-    if (!isPremium && getRemainingConversions() <= 0) {
-      console.log('❌ Conversion limit reached')
-      setShowPricing(true)
-      return
+    // Define fallback function if not available from context
+    const getRemainingConversionsLocal = () => {
+      if (typeof getRemainingConversions === 'function') {
+        return getRemainingConversions()
+      }
+      // Fallback: check localStorage or return default
+      const stored = localStorage.getItem('remainingConversions')
+      return stored ? parseInt(stored, 10) : 5
+    }
+    
+    // Check conversion limit for non-premium users
+    if (!isPremium) {
+      const remaining = getRemainingConversionsLocal()
+      console.log('Remaining conversions:', remaining)
+      if (remaining !== undefined && remaining !== null && remaining <= 0) {
+        console.log('❌ Conversion limit reached')
+        setShowPricing(true)
+        return
+      }
     }
 
     if (!targetFormat) {
@@ -240,6 +264,7 @@ function AppContent() {
   const handleGenerateFile = useCallback((file) => {
     setUploadedFiles([file])
     setConvertedFile(null)
+    setGeneratedFile(null) // Clear the generated file state
   }, [])
 
   return (
@@ -374,8 +399,8 @@ function AppContent() {
   )
 }
 
-function HomePage() {
-  return <AppContent />
+function HomePage({ generatedFile, setGeneratedFile }) {
+  return <AppContent generatedFile={generatedFile} setGeneratedFile={setGeneratedFile} />
 }
 
 function AppWrapper() {
@@ -385,6 +410,7 @@ function AppWrapper() {
   const [showAIChat, setShowAIChat] = useState(false)
   const [showAuth, setShowAuth] = useState(false)
   const [conversionHistory, setConversionHistory] = useState([])
+  const [generatedFile, setGeneratedFile] = useState(null)
 
   const { user } = useAuth() // Get user from AuthContext
 
@@ -438,7 +464,7 @@ function AppWrapper() {
           </div>
         }>
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<HomePage generatedFile={generatedFile} setGeneratedFile={setGeneratedFile} />} />
             <Route path="/features" element={<Features />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/about" element={<About />} />
@@ -464,8 +490,9 @@ function AppWrapper() {
           <AIChat
             onClose={() => setShowAIChat(false)}
             onGenerateFile={(file) => {
-              // File generated from AI
+              // File generated from AI - pass to AppContent
               console.log('Generated file:', file)
+              setGeneratedFile(file)
               setShowAIChat(false)
             }}
           />

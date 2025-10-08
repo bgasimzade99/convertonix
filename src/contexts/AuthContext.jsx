@@ -145,7 +145,12 @@ export function AuthProvider({ children }) {
 
   // Get remaining conversions
   const getRemainingConversions = () => {
-    if (!user || isPremium) return -1
+    if (!user) {
+      // Return from localStorage if available, otherwise default to 5
+      const stored = localStorage.getItem('remainingConversions')
+      return stored ? parseInt(stored, 10) : 5
+    }
+    if (isPremium) return -1 // -1 means unlimited
     return Math.max(0, user.conversionsLimit - user.conversionsUsed)
   }
 

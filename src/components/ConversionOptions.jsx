@@ -49,12 +49,12 @@ function ConversionOptions({ file, onConvert, isConverting, aiFeatures, setAiFea
     
     if (['jpg', 'jpeg', 'png', 'webp', 'heic', 'gif', 'bmp', 'svg'].includes(ext)) return 'image'
     if (['pdf'].includes(ext)) return 'pdf'
-    if (['doc', 'docx'].includes(ext)) return 'document'
+    if (['doc', 'docx', 'txt'].includes(ext)) return 'document'
     if (['xls', 'xlsx'].includes(ext)) return 'spreadsheet'
     if (['mp4', 'avi', 'mov', 'webm', 'mkv'].includes(ext)) return 'video'
     if (['mp3', 'wav', 'ogg', 'm4a', 'flac'].includes(ext)) return 'audio'
     
-    return 'other'
+    return 'document' // Default to document for unknown types
   }
 
   const fileType = getFileType(file.name)
@@ -75,7 +75,10 @@ function ConversionOptions({ file, onConvert, isConverting, aiFeatures, setAiFea
     document: [
       { format: 'pdf', label: 'PDF', icon: FileText },
       { format: 'txt', label: 'Text', icon: FileText },
-      { format: 'html', label: 'HTML', icon: FileText }
+      { format: 'html', label: 'HTML', icon: FileText },
+      { format: 'docx', label: 'Word', icon: FileText },
+      { format: 'jpg', label: 'JPG', icon: FileImage },
+      { format: 'png', label: 'PNG', icon: FileImage }
     ],
     video: [
       { format: 'mp4', label: 'MP4', icon: Film },
