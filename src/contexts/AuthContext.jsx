@@ -52,7 +52,7 @@ export function AuthProvider({ children }) {
         avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`,
         plan: 'free', // or 'premium'
         conversionsUsed: 0,
-        conversionsLimit: 2,
+        conversionsLimit: 100, // Sign in yapan kullanıcıya 100 conversion hakkı
         joinedAt: new Date().toISOString()
       }
 
@@ -88,7 +88,7 @@ export function AuthProvider({ children }) {
         avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`,
         plan: 'free',
         conversionsUsed: 0,
-        conversionsLimit: 2,
+        conversionsLimit: 100, // Sign up yapan kullanıcıya da 100 conversion hakkı
         joinedAt: new Date().toISOString()
       }
 

@@ -17,8 +17,25 @@ import {
   BarChart3
 } from 'lucide-react'
 import Particles from '../components/Particles'
+import BackToTop from '../components/BackToTop'
+import { useNavigate } from 'react-router-dom'
 
 function Features() {
+  const navigate = useNavigate()
+
+  const handleStartConverting = () => {
+    navigate('/')
+  }
+
+  const handleTryAIGenerator = () => {
+    navigate('/')
+    // AI Generator modal will be opened from the main page
+    setTimeout(() => {
+      // Trigger AI chat modal after navigation
+      const event = new CustomEvent('openAIChat')
+      window.dispatchEvent(event)
+    }, 100)
+  }
   const conversionFeatures = [
     {
       icon: <FileText size={48} />,
@@ -294,17 +311,19 @@ function Features() {
           <h2>Ready to Experience the Future of File Conversion?</h2>
           <p>Join thousands of users who trust Convertonix for their file conversion needs.</p>
           <div className="cta-buttons">
-            <button className="btn-primary">
+            <button className="btn-primary" onClick={handleStartConverting}>
               <Download size={20} />
               Start Converting Now
             </button>
-            <button className="btn-outline">
+            <button className="btn-outline" onClick={handleTryAIGenerator}>
               <Upload size={20} />
               Try AI Generator
             </button>
           </div>
         </div>
       </section>
+      
+      <BackToTop />
     </div>
   )
 }

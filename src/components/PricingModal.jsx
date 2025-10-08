@@ -14,9 +14,9 @@ function PricingModal({ onClose, onPurchase }) {
           <span>Special Gift for New Users!</span>
         </div>
 
-        <h2>Get <span className="highlight-green">100 FREE</span> Conversions in Your First Month!</h2>
+        <h2>Get <span className="highlight-green">100 FREE</span> Conversions!</h2>
         <p className="modal-subtitle">
-          Sign up now and get <strong>100 conversions total for your first month!</strong> 
+          Sign up now and get <strong>100 conversions for free!</strong> 
           Perfect for trying all features and experiencing our platform fully.
         </p>
 
@@ -28,9 +28,9 @@ function PricingModal({ onClose, onPurchase }) {
             <h3>Free</h3>
             <div className="price">$0</div>
             <ul className="features">
-              <li><Check size={16} /> 100 conversions first month</li>
-              <li><Check size={16} /> All formats included</li>
-              <li><Check size={16} /> <span className="highlight-purple">All AI Features</span></li>
+              <li><Check size={16} /> 100 conversions</li>
+              <li><Check size={16} /> All formats</li>
+              <li><Check size={16} /> <span className="highlight-purple">AI Features</span></li>
             </ul>
             <button className="btn-outline" onClick={onClose}>
               Current Plan
@@ -48,11 +48,10 @@ function PricingModal({ onClose, onPurchase }) {
             </div>
             <ul className="features">
               <li><Check size={16} /> Unlimited conversions</li>
-              <li><Check size={16} /> All formats supported</li>
-              <li><Check size={16} /> Advanced AI features</li>
+              <li><Check size={16} /> All formats</li>
+              <li><Check size={16} /> Advanced AI</li>
               <li><Check size={16} /> Priority processing</li>
               <li><Check size={16} /> Batch conversions</li>
-              <li><Check size={16} /> No watermarks</li>
             </ul>
             <button className="btn-primary" onClick={() => onPurchase('premium')}>
               Upgrade to Premium
@@ -70,8 +69,8 @@ function PricingModal({ onClose, onPurchase }) {
             <ul className="features">
               <li><Check size={16} /> One-time purchase</li>
               <li><Check size={16} /> No subscription</li>
-              <li><Check size={16} /> All features included</li>
-              <li><Check size={16} /> Perfect for occasional use</li>
+              <li><Check size={16} /> All features</li>
+              <li><Check size={16} /> Occasional use</li>
             </ul>
             <button className="btn-outline" onClick={() => onPurchase('onetime')}>
               Buy One Conversion

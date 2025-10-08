@@ -3,8 +3,23 @@ import imageCompression from 'browser-image-compression'
 import { saveAs } from 'file-saver'
 
 export async function convertFile(file, targetFormat, options = {}) {
-  const { aiFeatures = {} } = options
+  console.log('🔧 CONVERTER.JS - convertFile called')
+  console.log('File:', file.name)
+  console.log('Target Format:', targetFormat)
+  console.log('Options:', options)
+  
+  // AI features can be passed directly in options or nested in aiFeatures
+  const aiFeatures = {
+    enhance: options.enhance || false,
+    ocr: options.ocr || false,
+    summarize: options.summarize || false,
+    smartCompress: options.compress || options.smartCompress || false
+  }
+  
+  console.log('AI Features:', aiFeatures)
+  
   const fileType = getFileType(file.name)
+  console.log('File Type:', fileType)
   
   let result = {
     blob: null,
@@ -15,16 +30,21 @@ export async function convertFile(file, targetFormat, options = {}) {
   try {
     // Handle compression
     if (targetFormat === 'compress') {
+      console.log('🗜️ Compressing image...')
       result.blob = await compressImage(file, aiFeatures.smartCompress)
       result.filename = `${file.name.split('.')[0]}_compressed.${file.name.split('.').pop()}`
+      console.log('✅ Compression complete')
     }
     // Handle image conversions
     else if (fileType === 'image') {
+      console.log('🖼️ Converting image...')
       result.blob = await convertImage(file, targetFormat, aiFeatures)
       result.filename = `${file.name.split('.')[0]}.${targetFormat}`
+      console.log('✅ Image conversion complete')
     }
     // Handle PDF - simplified
     else if (fileType === 'pdf') {
+      console.log('📄 Converting PDF...')
       if (targetFormat === 'txt') {
         result.blob = new Blob(['PDF conversion to text requires additional setup. Try uploading an image for OCR instead.'], { type: 'text/plain' })
         result.filename = `${file.name.split('.')[0]}.txt`
@@ -33,32 +53,46 @@ export async function convertFile(file, targetFormat, options = {}) {
       }
     }
     else {
+      console.log('❌ Unsupported file type:', fileType)
       throw new Error('Unsupported file type for this demo')
     }
 
+    // Validate result has blob
+    if (!result.blob) {
+      console.error('❌ No blob generated!')
+      throw new Error('Conversion failed: No blob generated')
+    }
+
+    console.log('✅ Blob generated, size:', result.blob.size)
+
     // Apply AI OCR if requested
     if (aiFeatures.ocr && fileType === 'image') {
+      console.log('🔍 Running OCR...')
       try {
         const Tesseract = await import('tesseract.js')
         const { data: { text } } = await Tesseract.recognize(file, 'eng')
         result.aiResults.ocr = text
+        console.log('✅ OCR complete')
         
         // Summarize if requested
         if (aiFeatures.summarize && text) {
           result.aiResults.summary = summarizeText(text)
+          console.log('✅ Summarization complete')
         }
       } catch (error) {
-        console.log('OCR skipped:', error.message)
+        console.log('⚠️ OCR skipped:', error.message)
       }
     }
 
     if (aiFeatures.enhance && fileType === 'image') {
       result.aiResults.enhanced = true
+      console.log('✅ Enhancement applied')
     }
 
+    console.log('🎉 CONVERTER.JS - Final result:', result)
     return result
   } catch (error) {
-    console.error('Conversion error:', error)
+    console.error('❌ CONVERTER.JS ERROR:', error)
     throw error
   }
 }

@@ -1,6 +1,9 @@
 import { Crown, Zap } from 'lucide-react'
+import { useAuth } from '../contexts/AuthContext'
 
-function UsageTracker({ count, isPremium, onUpgradeClick }) {
+function UsageTracker({ onUpgradeClick }) {
+  const { user, isPremium, getRemainingConversions } = useAuth()
+  
   if (isPremium) {
     return (
       <div className="usage-tracker premium">
@@ -10,7 +13,18 @@ function UsageTracker({ count, isPremium, onUpgradeClick }) {
     )
   }
 
-  const remaining = 2 - count
+  if (!user) {
+    return (
+      <div className="usage-tracker">
+        <div className="usage-info">
+          <Zap size={20} />
+          <span>Sign in to get 100 free conversions!</span>
+        </div>
+      </div>
+    )
+  }
+
+  const remaining = getRemainingConversions()
 
   return (
     <div className={`usage-tracker ${remaining === 0 ? 'limit-reached' : ''}`}>
@@ -18,11 +32,11 @@ function UsageTracker({ count, isPremium, onUpgradeClick }) {
         <Zap size={20} />
         <span>
           {remaining > 0 
-            ? `${remaining} free conversion${remaining !== 1 ? 's' : ''} remaining today`
-            : 'Daily limit reached'}
+            ? `${remaining} free conversion${remaining !== 1 ? 's' : ''} remaining`
+            : 'Conversion limit reached'}
         </span>
       </div>
-      {remaining <= 1 && (
+      {remaining <= 5 && (
         <button className="btn-upgrade" onClick={onUpgradeClick}>
           Upgrade to Premium
         </button>

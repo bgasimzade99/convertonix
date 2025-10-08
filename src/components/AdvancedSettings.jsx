@@ -140,3 +140,4 @@ function AdvancedSettings({ onClose, settings, onSave }) {
 
 export default AdvancedSettings
 
+

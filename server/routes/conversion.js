@@ -1,118 +1,206 @@
 import express from 'express'
-import sharp from 'sharp'
-import { PDFDocument } from 'pdf-lib'
-import fs from 'fs/promises'
+import multer from 'multer'
+import { createFileConversionService } from '../services/fileConversionService.js'
 
 const router = express.Router()
+const fileConversionService = createFileConversionService()
 
-// Advanced image conversion endpoint
-router.post('/image', async (req, res) => {
-  try {
-    const upload = req.app.get('upload')
-    
-    upload.single('file')(req, res, async (err) => {
-      if (err) {
-        return res.status(400).json({ error: 'File upload failed', message: err.message })
-      }
-
-      const { targetFormat, quality = 90, width, height, enhance = false } = req.body
-      const inputPath = req.file.path
-
-      try {
-        let image = sharp(inputPath)
-
-        // Get metadata
-        const metadata = await image.metadata()
-
-        // Apply enhancements if requested
-        if (enhance === 'true' || enhance === true) {
-          image = image
-            .sharpen()
-            .modulate({ brightness: 1.05, saturation: 1.1 })
-        }
-
-        // Resize if dimensions provided
-        if (width || height) {
-          image = image.resize(
-            width ? parseInt(width) : null,
-            height ? parseInt(height) : null,
-            { fit: 'inside', withoutEnlargement: false }
-          )
-        }
-
-        // Convert to target format
-        const outputBuffer = await image
-          .toFormat(targetFormat, { quality: parseInt(quality) })
-          .toBuffer()
-
-        // Clean up input file
-        await fs.unlink(inputPath)
-
-        // Send converted image
-        res.set('Content-Type', `image/${targetFormat}`)
-        res.set('Content-Disposition', `attachment; filename="converted.${targetFormat}"`)
-        res.send(outputBuffer)
-
-      } catch (error) {
-        await fs.unlink(inputPath).catch(() => {})
-        throw error
-      }
-    })
-  } catch (error) {
-    console.error('Image conversion error:', error)
-    res.status(500).json({ error: 'Conversion failed', message: error.message })
+// Configure multer for file uploads
+const storage = multer.memoryStorage()
+const upload = multer({ 
+  storage,
+  limits: {
+    fileSize: 100 * 1024 * 1024 // 100MB limit
+  },
+  fileFilter: (req, file, cb) => {
+    // Allow all file types for conversion
+    cb(null, true)
   }
 })
 
-// PDF compression endpoint
-router.post('/pdf/compress', async (req, res) => {
+// Main conversion endpoint
+router.post('/convert', upload.single('file'), async (req, res) => {
   try {
-    const upload = req.app.get('upload')
+    if (!req.file) {
+      return res.status(400).json({ 
+        success: false, 
+        error: 'No file uploaded' 
+      })
+    }
+
+    const { 
+      inputFormat, 
+      outputFormat, 
+      quality = 90,
+      width,
+      height,
+      enhance = false,
+      compress = false
+    } = req.body
+
+    if (!inputFormat || !outputFormat) {
+      return res.status(400).json({ 
+        success: false, 
+        error: 'Input and output formats are required' 
+      })
+    }
+
+    // Prepare conversion options
+    const options = {
+      quality: parseInt(quality),
+      width: width ? parseInt(width) : undefined,
+      height: height ? parseInt(height) : undefined,
+      enhance: enhance === 'true' || enhance === true,
+      compress: compress === 'true' || compress === true
+    }
+
+    // Perform conversion
+    const outputBuffer = await fileConversionService.convertFile(
+      req.file.buffer,
+      inputFormat,
+      outputFormat,
+      options
+    )
+
+    // Generate output filename
+    const originalName = req.file.originalname.split('.')[0]
+    const outputFilename = `${originalName}_converted.${outputFormat}`
+
+    // Send response
+    res.setHeader('Content-Type', `application/${outputFormat}`)
+    res.setHeader('Content-Disposition', `attachment; filename="${outputFilename}"`)
+    res.setHeader('Content-Length', outputBuffer.length)
     
-    upload.single('file')(req, res, async (err) => {
-      if (err) {
-        return res.status(400).json({ error: 'File upload failed', message: err.message })
-      }
+    res.status(200).json({
+      success: true,
+      filename: outputFilename,
+      size: outputBuffer.length,
+      format: outputFormat,
+      data: outputBuffer.toString('base64') // Send as base64 for frontend
+    })
 
-      const inputPath = req.file.path
+  } catch (error) {
+    console.error('Conversion error:', error)
+    res.status(500).json({ 
+      success: false, 
+      error: error.message || 'Conversion failed' 
+    })
+  }
+})
 
+// Batch conversion endpoint
+router.post('/batch-convert', upload.array('files', 10), async (req, res) => {
+  try {
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ 
+        success: false, 
+        error: 'No files uploaded' 
+      })
+    }
+
+    const { 
+      outputFormat, 
+      quality = 90,
+      width,
+      height,
+      enhance = false,
+      compress = false
+    } = req.body
+
+    if (!outputFormat) {
+      return res.status(400).json({ 
+        success: false, 
+        error: 'Output format is required' 
+      })
+    }
+
+    const results = []
+    const errors = []
+
+    // Process each file
+    for (let i = 0; i < req.files.length; i++) {
+      const file = req.files[i]
+      
       try {
-        // Read PDF
-        const pdfBytes = await fs.readFile(inputPath)
-        const pdfDoc = await PDFDocument.load(pdfBytes)
+        // Determine input format from file extension
+        const inputFormat = file.originalname.split('.').pop().toLowerCase()
+        
+        const options = {
+          quality: parseInt(quality),
+          width: width ? parseInt(width) : undefined,
+          height: height ? parseInt(height) : undefined,
+          enhance: enhance === 'true' || enhance === true,
+          compress: compress === 'true' || compress === true
+        }
 
-        // Compress by removing metadata and optimizing
-        pdfDoc.setTitle('')
-        pdfDoc.setAuthor('')
-        pdfDoc.setSubject('')
-        pdfDoc.setKeywords([])
-        pdfDoc.setProducer('')
-        pdfDoc.setCreator('')
+        const outputBuffer = await fileConversionService.convertFile(
+          file.buffer,
+          inputFormat,
+          outputFormat,
+          options
+        )
 
-        // Save compressed PDF
-        const compressedBytes = await pdfDoc.save({
-          useObjectStreams: false,
-          addDefaultPage: false
+        const originalName = file.originalname.split('.')[0]
+        const outputFilename = `${originalName}_converted.${outputFormat}`
+
+        results.push({
+          originalName: file.originalname,
+          filename: outputFilename,
+          size: outputBuffer.length,
+          format: outputFormat,
+          data: outputBuffer.toString('base64')
         })
 
-        // Clean up input file
-        await fs.unlink(inputPath)
-
-        // Send compressed PDF
-        res.set('Content-Type', 'application/pdf')
-        res.set('Content-Disposition', 'attachment; filename="compressed.pdf"')
-        res.send(Buffer.from(compressedBytes))
-
       } catch (error) {
-        await fs.unlink(inputPath).catch(() => {})
-        throw error
+        errors.push({
+          filename: file.originalname,
+          error: error.message
+        })
       }
+    }
+
+    res.status(200).json({
+      success: true,
+      results,
+      errors,
+      totalProcessed: results.length,
+      totalErrors: errors.length
     })
+
   } catch (error) {
-    console.error('PDF compression error:', error)
-    res.status(500).json({ error: 'Compression failed', message: error.message })
+    console.error('Batch conversion error:', error)
+    res.status(500).json({ 
+      success: false, 
+      error: error.message || 'Batch conversion failed' 
+    })
   }
+})
+
+// Get supported formats endpoint
+router.get('/formats', (req, res) => {
+  const supportedFormats = {
+    image: {
+      input: ['jpg', 'jpeg', 'png', 'webp', 'gif', 'bmp', 'svg'],
+      output: ['jpg', 'jpeg', 'png', 'webp', 'pdf']
+    },
+    document: {
+      input: ['pdf', 'doc', 'docx'],
+      output: ['pdf', 'txt', 'html', 'jpg', 'png']
+    },
+    video: {
+      input: ['mp4', 'avi', 'mov', 'webm', 'mkv'],
+      output: ['mp4', 'webm', 'gif']
+    },
+    audio: {
+      input: ['mp3', 'wav', 'ogg', 'm4a', 'flac'],
+      output: ['mp3', 'wav', 'ogg']
+    }
+  }
+
+  res.status(200).json({
+    success: true,
+    formats: supportedFormats
+  })
 })
 
 export default router
-

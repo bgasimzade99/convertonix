@@ -13,8 +13,27 @@ import {
   Gift
 } from 'lucide-react'
 import Particles from '../components/Particles'
+import BackToTop from '../components/BackToTop'
+import { useNavigate } from 'react-router-dom'
 
 function Pricing() {
+  const navigate = useNavigate()
+
+  const handleGetStarted = () => {
+    navigate('/')
+  }
+
+  const handleStartTrial = () => {
+    navigate('/')
+  }
+
+  const handleContactSales = () => {
+    window.open('mailto:bgdevofficial@gmail.com?subject=Enterprise Inquiry&body=Hi, I am interested in the Enterprise plan. Please contact me.', '_blank')
+  }
+
+  const handleBuyNow = () => {
+    navigate('/')
+  }
   const plans = [
     {
       name: "Free",
@@ -22,18 +41,18 @@ function Pricing() {
       period: "forever",
       icon: <Zap size={32} />,
       popular: false,
-      features: [
-        "100 conversions first month",
-        "All formats included",
-        "All AI Features",
-        "Privacy-first processing",
-        "Community support"
-      ],
-      limitations: [
-        "Limited to 2 daily conversions",
-        "Basic AI features only",
-        "Standard support"
-      ],
+            features: [
+              "100 conversions",
+              "All formats included",
+              "All AI Features",
+              "Privacy-first processing",
+              "Community support"
+            ],
+        limitations: [
+          "Limited to 100 conversions total",
+          "Basic AI features only",
+          "Standard support"
+        ],
       buttonText: "Get Started Free",
       buttonStyle: "btn-outline"
     },
@@ -117,7 +136,7 @@ function Pricing() {
     },
     {
       question: "Is there a free trial for Premium?",
-      answer: "Yes! New users get a 7-day free trial of Premium features. No credit card required to start."
+      answer: "Yes! New users get 100 free conversions to try all features. No credit card required to start."
     },
     {
       question: "What payment methods do you accept?",
@@ -139,12 +158,12 @@ function Pricing() {
           </div>
           
           <h1>
-            Get <span className="highlight-green">100 FREE</span> Conversions in Your First Month!
+            Get <span className="highlight-green">100 FREE</span> Conversions!
             <br />
             Choose the Perfect Plan for You
           </h1>
           <p className="hero-subtitle">
-            Sign up now and get <strong>100 conversions total for your first month!</strong> 
+            Sign up now and get <strong>100 conversions for free!</strong>
             Perfect for trying all features and experiencing our platform fully.
           </p>
           <div className="pricing-toggle">
@@ -209,7 +228,15 @@ function Pricing() {
                   </div>
                 )}
 
-                <button className={`plan-button ${plan.buttonStyle}`}>
+                <button 
+                  className={`plan-button ${plan.buttonStyle}`}
+                  onClick={
+                    plan.name === 'Free' ? handleGetStarted :
+                    plan.name === 'Premium' ? handleStartTrial :
+                    plan.name === 'Enterprise' ? handleContactSales :
+                    handleGetStarted
+                  }
+                >
                   {plan.buttonText}
                   <ArrowRight size={16} />
                 </button>
@@ -246,7 +273,10 @@ function Pricing() {
               </ul>
             </div>
 
-            <button className={`paygo-button ${payAsYouGo.buttonStyle}`}>
+            <button 
+              className={`paygo-button ${payAsYouGo.buttonStyle}`}
+              onClick={handleBuyNow}
+            >
               <Gift size={16} />
               {payAsYouGo.buttonText}
             </button>
@@ -332,17 +362,19 @@ function Pricing() {
           <h2>Ready to Get Started?</h2>
           <p>Join thousands of users who trust Convertonix for their file conversion needs.</p>
           <div className="cta-buttons">
-            <button className="btn-primary">
+            <button className="btn-primary" onClick={handleStartTrial}>
               <Crown size={20} />
               Start Free Trial
             </button>
-            <button className="btn-outline">
+            <button className="btn-outline" onClick={handleContactSales}>
               <Users size={20} />
               Contact Sales
             </button>
           </div>
         </div>
       </section>
+      
+      <BackToTop />
     </div>
   )
 }

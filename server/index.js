@@ -15,6 +15,12 @@ import aiRoutes from './routes/ai.js'
 import authRoutes from './routes/auth.js'
 import paymentRoutes from './routes/payment.js'
 
+// Import AI proxy
+import { createAIProxy } from './ai-proxy.js'
+
+// Import file conversion service
+import { createFileConversionService } from './services/fileConversionService.js'
+
 dotenv.config()
 
 const __filename = fileURLToPath(import.meta.url)
@@ -61,6 +67,9 @@ const upload = multer({
 
 // Make upload middleware available globally
 app.set('upload', upload)
+
+// Initialize AI Proxy
+createAIProxy(app)
 
 // Routes
 app.use('/api/convert', conversionRoutes)

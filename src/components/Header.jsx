@@ -12,16 +12,41 @@ function Header({ darkMode, onToggleDarkMode, onShowHistory, onShowPricing, onSh
           <Sparkles size={36} className="logo-icon" />
           <span className="logo-text">Convertonix</span>
         </Link>
-        <nav className="nav">
-          <Link to="/" className={location.pathname === '/' ? 'active' : ''}>Home</Link>
-          <Link to="/features" className={location.pathname === '/features' ? 'active' : ''}>Features</Link>
-          <Link to="/pricing" className={location.pathname === '/pricing' ? 'active' : ''}>Pricing</Link>
-          <Link to="/about" className={location.pathname === '/about' ? 'active' : ''}>About</Link>
+        <nav className="nav" role="navigation" aria-label="Main navigation">
+          <Link 
+            to="/" 
+            className={location.pathname === '/' ? 'active' : ''}
+            aria-current={location.pathname === '/' ? 'page' : undefined}
+          >
+            Home
+          </Link>
+          <Link 
+            to="/features" 
+            className={location.pathname === '/features' ? 'active' : ''}
+            aria-current={location.pathname === '/features' ? 'page' : undefined}
+          >
+            Features
+          </Link>
+          <Link 
+            to="/pricing" 
+            className={location.pathname === '/pricing' ? 'active' : ''}
+            aria-current={location.pathname === '/pricing' ? 'page' : undefined}
+          >
+            Pricing
+          </Link>
+          <Link 
+            to="/about" 
+            className={location.pathname === '/about' ? 'active' : ''}
+            aria-current={location.pathname === '/about' ? 'page' : undefined}
+          >
+            About
+          </Link>
           
               <button 
                 className="icon-btn ai-btn"
                 onClick={onShowAIChat}
                 title="AI File Generator"
+                aria-label="Open AI File Generator"
               >
                 <Wand2 size={20} />
               </button>
@@ -30,6 +55,7 @@ function Header({ darkMode, onToggleDarkMode, onShowHistory, onShowPricing, onSh
                 className="icon-btn"
                 onClick={onShowHistory}
                 title="Conversion History"
+                aria-label="View conversion history"
               >
                 <Clock size={20} />
               </button>
@@ -38,6 +64,7 @@ function Header({ darkMode, onToggleDarkMode, onShowHistory, onShowPricing, onSh
                 className="icon-btn"
                 onClick={onToggleDarkMode}
                 title="Toggle Dark Mode"
+                aria-label={`Switch to ${darkMode ? 'light' : 'dark'} mode`}
               >
                 {darkMode ? <Sun size={20} /> : <Moon size={20} />}
               </button>

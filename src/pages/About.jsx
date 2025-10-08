@@ -16,19 +16,30 @@ import {
   Github
 } from 'lucide-react'
 import Particles from '../components/Particles'
+import BackToTop from '../components/BackToTop'
+import { useNavigate } from 'react-router-dom'
 
 function About() {
+  const navigate = useNavigate()
+
+  const handleStartConverting = () => {
+    navigate('/')
+  }
   const team = [
     {
-      name: "BGDev",
-      role: "Founder & Developer",
+      name: "Babak Gasimzade",
+      role: "Founder & Lead Developer",
       avatar: "/babakme.jpg",
-      bio: "The creator of Convertonix. Passionate about building innovative solutions that make file conversion simple and secure.",
+      bio: "Computer Science student at Riga Technical University. Passionate about building responsive web apps, mobile apps, and AI-powered tools. Creator of Convertonix and multiple innovative projects.",
+      location: "Europe",
+      website: "bgdevofficial.com",
       social: {
-        twitter: "https://twitter.com/bgdevofficial",
-        linkedin: "https://linkedin.com/in/bgdevofficial",
-        github: "https://github.com/bgdevofficial"
-      }
+        linkedin: "https://www.linkedin.com/in/babakgasimzade/",
+        github: "https://github.com/bgasimzade99",
+        website: "https://bgdevofficial.com"
+      },
+      skills: ["React", "React Native", "TypeScript", "Node.js", "Firebase", "TailwindCSS"],
+      projects: ["BGResume", "BGAutoSales", "BGWeather", "Convertonix"]
     }
   ]
 
@@ -155,27 +166,59 @@ function About() {
         </div>
       </section>
 
-      {/* Story Section */}
-      <section className="story-section">
+      {/* BGDev Story Section */}
+      <section className="bgdev-story-section">
         <div className="container">
-          <div className="story-content">
-            <div className="story-text">
-              <h2>Our Story</h2>
+          <div className="bgdev-story-content">
+            <div className="bgdev-story-text">
+              <h2>Meet BGDev</h2>
+              <div className="bgdev-quote">
+                <p className="quote-text">
+                  "We're not another dev agency — we're a digital craft studio."
+                </p>
+                <p className="quote-author">— BGDev Team</p>
+              </div>
               <p>
-                Convertonix started as a simple idea in 2024: what if file conversion could be fast, 
-                secure, and completely private? Traditional file converters required uploading files to servers, 
-                compromising user privacy and security.
+                At BGDev, every line of code, every pixel, and every animation has a reason.
+                We build things that look stunning, feel smooth, and work flawlessly.
               </p>
               <p>
-                We set out to change that. By leveraging cutting-edge browser technologies and AI, 
-                we created a platform where all processing happens locally on your device. 
-                Your files never leave your computer, ensuring complete privacy while delivering 
-                professional-grade conversion quality.
+                Born from late-night coding sessions and a bold vision, BGDev is a startup built by creators — 
+                for creators, founders, and dreamers who want to stand out in the digital crowd.
               </p>
+              <div className="bgdev-philosophy">
+                <h3>Our Philosophy</h3>
+                <div className="philosophy-grid">
+                  <div className="philosophy-item">
+                    <h4>Modern</h4>
+                    <p>Cutting-edge technologies and contemporary design principles</p>
+                  </div>
+                  <div className="philosophy-item">
+                    <h4>Minimal</h4>
+                    <p>Clean, purposeful design that focuses on what matters</p>
+                  </div>
+                  <div className="philosophy-item">
+                    <h4>Powerful</h4>
+                    <p>Robust solutions that deliver exceptional performance</p>
+                  </div>
+                </div>
+              </div>
               <p>
-                Today, Convertonix serves millions of users worldwide, from individual creators to 
-                enterprise teams, all united by their need for fast, secure, and reliable file conversion.
+                We mix React, Tailwind, and design thinking to create experiences that actually feel alive. 
+                From sleek landing pages to full-stack products, we make technology look beautiful — 
+                and business feel human.
               </p>
+              <div className="bgdev-vision">
+                <h3>Our Vision</h3>
+                <p>
+                  Not just websites. Not just apps.<br />
+                  We create digital energy — the kind that people remember.
+                </p>
+                <p>
+                  We're here to shape the next generation of online experiences — 
+                  one smart, clean project at a time.
+                </p>
+              </div>
             </div>
             <div className="story-timeline">
               <h3>Our Journey</h3>
@@ -196,30 +239,68 @@ function About() {
       {/* Team Section */}
       <section className="team-section">
         <div className="container">
-          <h2 className="section-title">Meet the Creator</h2>
+          <h2 className="section-title">Meet BGDev</h2>
           <p className="section-subtitle">
-            The developer behind Convertonix, building innovative solutions 
-            for file conversion challenges.
+            The digital craft studio behind Convertonix, building innovative solutions 
+            that look stunning, feel smooth, and work flawlessly.
           </p>
           <div className="team-grid">
             {team.map((member, index) => (
-              <div key={index} className="team-card">
-                <div className="team-avatar">
-                  <img src={member.avatar} alt={member.name} />
+              <div key={index} className="team-card enhanced">
+                <div className="team-header">
+                  <div className="team-avatar">
+                    <img src={member.avatar} alt={member.name} />
+                    <div className="status-indicator"></div>
+                  </div>
+                  <div className="team-info">
+                    <h3 className="team-name">{member.name}</h3>
+                    <p className="team-role">{member.role}</p>
+                    <div className="team-location">
+                      <Globe size={16} />
+                      <span>{member.location}</span>
+                    </div>
+                  </div>
                 </div>
-                <h3 className="team-name">{member.name}</h3>
-                <p className="team-role">{member.role}</p>
-                <p className="team-bio">{member.bio}</p>
-                <div className="team-social">
-                  <a href={member.social.twitter} target="_blank" rel="noopener noreferrer">
-                    <Twitter size={20} />
-                  </a>
-                  <a href={member.social.linkedin} target="_blank" rel="noopener noreferrer">
-                    <Linkedin size={20} />
-                  </a>
-                  <a href={member.social.github} target="_blank" rel="noopener noreferrer">
-                    <Github size={20} />
-                  </a>
+                
+                <div className="team-content">
+                  <p className="team-bio">{member.bio}</p>
+                  
+                  <div className="team-skills">
+                    <h4>Tech Stack</h4>
+                    <div className="skills-grid">
+                      {member.skills.map((skill, idx) => (
+                        <span key={idx} className="skill-tag">{skill}</span>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div className="team-projects">
+                    <h4>Featured Projects</h4>
+                    <div className="projects-list">
+                      {member.projects.map((project, idx) => (
+                        <span key={idx} className="project-tag">{project}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="team-footer">
+                  <div className="team-social">
+                    <a href={member.social.linkedin} target="_blank" rel="noopener noreferrer" title="LinkedIn">
+                      <Linkedin size={20} />
+                    </a>
+                    <a href={member.social.github} target="_blank" rel="noopener noreferrer" title="GitHub">
+                      <Github size={20} />
+                    </a>
+                    <a href={member.social.website} target="_blank" rel="noopener noreferrer" title="Website">
+                      <Globe size={20} />
+                    </a>
+                  </div>
+                  <div className="team-website">
+                    <a href={member.social.website} target="_blank" rel="noopener noreferrer">
+                      {member.website}
+                    </a>
+                  </div>
                 </div>
               </div>
             ))}
@@ -304,7 +385,7 @@ function About() {
             <div className="contact-cta">
               <h3>Ready to Get Started?</h3>
               <p>Join thousands of users who trust Convertonix for their file conversion needs.</p>
-              <button className="btn-primary">
+              <button className="btn-primary" onClick={handleStartConverting}>
                 Start Converting Now
                 <ArrowRight size={20} />
               </button>
@@ -312,6 +393,8 @@ function About() {
           </div>
         </div>
       </section>
+      
+      <BackToTop />
     </div>
   )
 }

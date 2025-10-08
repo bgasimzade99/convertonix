@@ -1,8 +1,48 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { FileImage, FileText, Film, Music, Package, Sparkles, Wand2 } from 'lucide-react'
 
 function ConversionOptions({ file, onConvert, isConverting, aiFeatures, setAiFeatures, onCancel }) {
   const [selectedFormat, setSelectedFormat] = useState(null)
+  const buttonRef = useRef(null)
+
+  console.log('🎨 ConversionOptions RENDERED')
+  console.log('Props:', { file: file?.name, onConvert: typeof onConvert, isConverting, aiFeatures })
+
+  // DOM'a direkt event listener ekle
+  useEffect(() => {
+    const button = buttonRef.current
+    if (button) {
+      console.log('🔧 Adding DOM event listener to button')
+      const handleClick = (e) => {
+        console.log('🔘🔘🔘 DOM EVENT LISTENER TRIGGERED! 🔘🔘🔘')
+        console.log('Selected Format:', selectedFormat)
+        console.log('onConvert function:', onConvert)
+        
+        e.preventDefault()
+        e.stopPropagation()
+        
+        if (!selectedFormat) {
+          console.log('⚠️ NO FORMAT SELECTED!')
+          alert('⚠️ Please select a format first!')
+          return
+        }
+        
+        console.log('✅ CALLING onConvert with format:', selectedFormat)
+        try {
+          onConvert(selectedFormat)
+          console.log('✅ onConvert called successfully')
+        } catch (error) {
+          console.error('❌ ERROR calling onConvert:', error)
+        }
+      }
+      
+      button.addEventListener('click', handleClick)
+      
+      return () => {
+        button.removeEventListener('click', handleClick)
+      }
+    }
+  }, [selectedFormat, onConvert])
 
   const getFileType = (filename) => {
     const ext = filename.split('.').pop().toLowerCase()
@@ -116,7 +156,10 @@ function ConversionOptions({ file, onConvert, isConverting, aiFeatures, setAiFea
             <button
               key={option.format}
               className={`format-option ${selectedFormat === option.format ? 'selected' : ''}`}
-              onClick={() => setSelectedFormat(option.format)}
+              onClick={() => {
+                console.log('📝 Format selected:', option.format)
+                setSelectedFormat(option.format)
+              }}
             >
               <Icon size={32} />
               <span>{option.label}</span>
@@ -126,7 +169,10 @@ function ConversionOptions({ file, onConvert, isConverting, aiFeatures, setAiFea
         
         <button
           className={`format-option ${selectedFormat === 'compress' ? 'selected' : ''}`}
-          onClick={() => setSelectedFormat('compress')}
+          onClick={() => {
+            console.log('📝 Format selected: compress')
+            setSelectedFormat('compress')
+          }}
         >
           <Package size={32} />
           <span>Compress</span>
@@ -134,13 +180,27 @@ function ConversionOptions({ file, onConvert, isConverting, aiFeatures, setAiFea
       </div>
 
       <div className="action-buttons">
-        <button className="btn-secondary" onClick={onCancel}>
+        <button 
+          className="btn-secondary" 
+          onClick={() => {
+            console.log('❌ CANCEL CLICKED')
+            onCancel()
+          }}
+        >
           Cancel
         </button>
         <button 
+          ref={buttonRef}
           className="btn-primary"
-          onClick={() => onConvert(selectedFormat)}
-          disabled={!selectedFormat || isConverting}
+          type="button"
+          disabled={false}
+          style={{ 
+            opacity: (!selectedFormat || isConverting) ? 0.5 : 1, 
+            cursor: 'pointer',
+            pointerEvents: 'auto',
+            zIndex: 9999,
+            position: 'relative'
+          }}
         >
           {isConverting ? (
             <>
@@ -150,7 +210,7 @@ function ConversionOptions({ file, onConvert, isConverting, aiFeatures, setAiFea
           ) : (
             <>
               <Wand2 size={20} />
-              Convert with AI
+              Convert with AI {selectedFormat ? `(${selectedFormat})` : '- Select Format First'}
             </>
           )}
         </button>
