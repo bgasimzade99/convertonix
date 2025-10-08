@@ -40,7 +40,7 @@ function AppContent() {
   const [conversionHistory, setConversionHistory] = useState([])
   const [batchMode, setBatchMode] = useState(false)
 
-  const { user, isPremium, canConvert, trackConversion } = useAuth()
+  const { user, isPremium, canConvert, trackConversion, getRemainingConversions } = useAuth()
   
   const [aiFeatures, setAiFeatures] = useState({
     ocr: false,
