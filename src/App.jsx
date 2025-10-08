@@ -18,7 +18,7 @@ import UserProfile from './components/UserProfile'
 import BackToTop from './components/BackToTop'
 import ErrorBoundary from './components/ErrorBoundary'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
-import { apiService } from './utils/apiService'
+import apiService from './utils/apiService'
 
 // Lazy load pages for better performance
 const Features = lazy(() => import('./pages/Features'))
