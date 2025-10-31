@@ -1,5 +1,5 @@
-const CACHE_NAME = 'convertonix-v2'
-const urlsToCache = [
+const CACHE_NAME = 'convertonix-v3'
+const STATIC_ASSETS = [
   '/',
   '/logo.svg',
   '/favicon.svg'
@@ -12,67 +12,49 @@ self.addEventListener('install', (event) => {
     caches.open(CACHE_NAME)
       .then((cache) => {
         console.log('Opened cache')
-        return cache.addAll(urlsToCache).catch(err => {
+        return cache.addAll(STATIC_ASSETS).catch(err => {
           console.log('Cache addAll error:', err)
         })
       })
   )
 })
 
-// Fetch event - Network First strategy for HTML, Cache First for assets
+// Fetch event - Stale While Revalidate for everything
 self.addEventListener('fetch', (event) => {
   const { request } = event
   const url = new URL(request.url)
 
-  // Network first for HTML files
-  if (request.headers.get('accept').includes('text/html')) {
-    event.respondWith(
-      fetch(request)
-        .then((response) => {
-          // Clone the response before caching
-          const responseClone = response.clone()
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(request, responseClone)
-          })
-          return response
-        })
-        .catch(() => {
-          // Fallback to cache if offline
-          return caches.match(request)
-        })
-    )
-    return
-  }
-
-  // Network first for API calls
+  // Never cache API calls, always fetch fresh
   if (url.pathname.startsWith('/api')) {
     event.respondWith(fetch(request))
     return
   }
 
-  // Cache first for static assets (js, css, images)
+  // For all other requests (HTML, JS, CSS, images), use stale-while-revalidate
   event.respondWith(
     caches.match(request)
       .then((cachedResponse) => {
-        if (cachedResponse) {
-          // Return cached version but also fetch update in background
-          fetch(request).then((response) => {
-            caches.open(CACHE_NAME).then((cache) => {
-              cache.put(request, response)
-            })
-          }).catch(() => {})
-          return cachedResponse
-        }
-        
-        // Not in cache, fetch from network
-        return fetch(request).then((response) => {
-          // Cache the new response
-          const responseClone = response.clone()
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(request, responseClone)
+        // Always try to fetch fresh version
+        const fetchPromise = fetch(request)
+          .then((response) => {
+            // If we got a successful response, cache it
+            if (response.ok) {
+              const responseClone = response.clone()
+              caches.open(CACHE_NAME).then((cache) => {
+                cache.put(request, responseClone)
+              })
+            }
+            return response
           })
-          return response
-        })
+          .catch(() => {
+            // If fetch failed and we have a cache, return it
+            if (cachedResponse) {
+              return cachedResponse
+            }
+          })
+
+        // Return cached version immediately if available, otherwise wait for fetch
+        return cachedResponse || fetchPromise
       })
   )
 })
