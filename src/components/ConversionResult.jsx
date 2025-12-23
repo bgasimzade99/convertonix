@@ -14,9 +14,19 @@ function ConversionResult({ originalFile, convertedFile, format, onReset }) {
     <div className="conversion-result">
       <div className="success-icon">
         <CheckCircle size={64} />
+        <div className="success-particles">
+          <span className="particle"></span>
+          <span className="particle"></span>
+          <span className="particle"></span>
+          <span className="particle"></span>
+          <span className="particle"></span>
+          <span className="particle"></span>
+          <span className="particle"></span>
+          <span className="particle"></span>
+        </div>
       </div>
       
-      <h2>Conversion Complete!</h2>
+      <h2>Conversion Complete! 🎉</h2>
       
       <div className="result-info">
         <div className="size-comparison">

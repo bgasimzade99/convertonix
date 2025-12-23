@@ -56,7 +56,7 @@ function BatchConverter({ files, onConvert, isConverting, aiFeatures, setAiFeatu
           {isConverting ? (
             <>
               <span className="spinner"></span>
-              Converting {files.length} files...
+              <span>AI Processing {files.length} files<span className="ai-loading-dots"><span></span><span></span><span></span></span></span>
             </>
           ) : (
             <>

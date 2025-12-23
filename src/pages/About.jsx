@@ -39,7 +39,7 @@ function About() {
         website: "https://bgdevofficial.com"
       },
       skills: ["React", "React Native", "TypeScript", "Node.js", "Firebase", "TailwindCSS"],
-      projects: ["BGResume", "BGAutoSales", "BGWeather", "Convertonix"]
+      projects: ["BGResume", "BGAutoSales", "BGWeather", "Convertonix", "Asnates JSK", "BGFocus"]
     }
   ]
 

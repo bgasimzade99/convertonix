@@ -1,120 +1,9 @@
 import React from 'react'
-import { 
-  Shield, 
-  Lock, 
-  Eye, 
-  EyeOff, 
-  Database, 
-  Server, 
-  Globe, 
-  CheckCircle,
-  AlertCircle,
-  FileText,
-  Users,
-  Clock
-} from 'lucide-react'
+import { Link } from 'react-router-dom'
 import Particles from '../components/Particles'
 import BackToTop from '../components/BackToTop'
 
 function Privacy() {
-  const privacyPrinciples = [
-    {
-      icon: <Lock size={48} />,
-      title: "🔒 Local Processing",
-      description: "All file conversions happen directly in your browser. Your files never leave your device.",
-      details: [
-        "No file uploads to our servers",
-        "Processing happens in your browser",
-        "Files stay on your device at all times",
-        "Zero data transmission to external servers"
-      ]
-    },
-    {
-      icon: <EyeOff size={48} />,
-      title: "👁️ No Data Collection",
-      description: "We don't collect, store, or analyze your personal data or file contents.",
-      details: [
-        "No personal information collection",
-        "No file content analysis",
-        "No usage tracking or analytics",
-        "No third-party data sharing"
-      ]
-    },
-    {
-      icon: <Database size={48} />,
-      title: "🗄️ Zero Storage",
-      description: "We don't store any files, metadata, or conversion history on our servers.",
-      details: [
-        "No file storage on our servers",
-        "No conversion history stored remotely",
-        "No metadata collection",
-        "Complete data sovereignty"
-      ]
-    },
-    {
-      icon: <Globe size={48} />,
-      title: "🌍 GDPR Compliant",
-      description: "We follow strict privacy regulations and data protection standards.",
-      details: [
-        "GDPR compliance",
-        "CCPA compliance",
-        "Privacy by design principles",
-        "Regular privacy audits"
-      ]
-    }
-  ]
-
-  const dataTypes = [
-    {
-      type: "File Contents",
-      collected: false,
-      reason: "All processing happens locally in your browser"
-    },
-    {
-      type: "Personal Information",
-      collected: false,
-      reason: "We don't require or collect personal data"
-    },
-    {
-      type: "Usage Analytics",
-      collected: false,
-      reason: "No tracking or analytics on file conversions"
-    },
-    {
-      type: "IP Addresses",
-      collected: false,
-      reason: "We don't log or store IP addresses"
-    },
-    {
-      type: "Browser Information",
-      collected: false,
-      reason: "No browser fingerprinting or tracking"
-    }
-  ]
-
-  const securityMeasures = [
-    {
-      icon: <Shield size={32} />,
-      title: "End-to-End Encryption",
-      description: "All communications use HTTPS encryption"
-    },
-    {
-      icon: <Server size={32} />,
-      title: "Secure Infrastructure",
-      description: "Hosted on secure, certified cloud infrastructure"
-    },
-    {
-      icon: <CheckCircle size={32} />,
-      title: "Regular Security Audits",
-      description: "Regular security assessments and updates"
-    },
-    {
-      icon: <Users size={32} />,
-      title: "Privacy Team",
-      description: "Dedicated privacy and security team"
-    }
-  ]
-
   return (
     <div className="privacy-page">
       <Particles />
@@ -124,150 +13,160 @@ function Privacy() {
         <div className="container">
           <h1>
             <span className="gradient-text">Privacy Policy</span>
-            <br />
-            Your Data, Your Control
           </h1>
           <p className="hero-subtitle">
-            At Convertonix, privacy isn't just a feature—it's our foundation. 
-            We've built our platform with privacy-first principles to ensure your data never leaves your device.
+            Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
           </p>
         </div>
       </section>
 
-      {/* Privacy Principles */}
-      <section className="privacy-principles">
-        <div className="container">
-          <h2 className="section-title">Our Privacy Principles</h2>
-          <div className="principles-grid">
-            {privacyPrinciples.map((principle, index) => (
-              <div key={index} className="principle-card">
-                <div className="principle-icon">{principle.icon}</div>
-                <h3>{principle.title}</h3>
-                <p className="principle-description">{principle.description}</p>
-                <ul className="principle-details">
-                  {principle.details.map((detail, idx) => (
-                    <li key={idx}>
-                      <CheckCircle size={16} />
-                      {detail}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Data Collection */}
-      <section className="data-collection">
-        <div className="container">
-          <h2 className="section-title">What We Don't Collect</h2>
-          <p className="section-subtitle">
-            Unlike other file conversion services, we don't collect any of your data.
-          </p>
-          <div className="data-table">
-            {dataTypes.map((item, index) => (
-              <div key={index} className="data-row">
-                <div className="data-type">
-                  <FileText size={20} />
-                  <span>{item.type}</span>
-                </div>
-                <div className="data-status">
-                  <span className={`status ${item.collected ? 'collected' : 'not-collected'}`}>
-                    {item.collected ? 'Collected' : 'Not Collected'}
-                  </span>
-                </div>
-                <div className="data-reason">{item.reason}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Security Measures */}
-      <section className="security-measures">
-        <div className="container">
-          <h2 className="section-title">Security Measures</h2>
-          <div className="security-grid">
-            {securityMeasures.map((measure, index) => (
-              <div key={index} className="security-card">
-                <div className="security-icon">{measure.icon}</div>
-                <h3>{measure.title}</h3>
-                <p>{measure.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Technical Details */}
-      <section className="technical-details">
-        <div className="container">
-          <h2 className="section-title">How It Works</h2>
-          <div className="technical-content">
-            <div className="technical-text">
-              <h3>Local Processing Technology</h3>
-              <p>
-                Convertonix uses advanced browser-based processing technology that allows 
-                file conversions to happen entirely on your device. This means:
+      {/* Content Section */}
+      <section className="legal-content-section">
+        <div className="container legal-container">
+          <div className="legal-content">
+            
+            <div className="legal-section">
+              <h2 className="legal-heading">1. Introduction</h2>
+              <p className="legal-text">
+                At Convertonix ("we", "us", "our", or "Service"), we respect your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our AI-powered file conversion service. Please read this Privacy Policy carefully.
               </p>
-              <ul className="technical-list">
-                <li><strong>Client-Side Processing:</strong> All conversion algorithms run in your browser</li>
-                <li><strong>No Server Uploads:</strong> Files never leave your device</li>
-                <li><strong>Memory-Only Processing:</strong> Files are processed in RAM, not stored</li>
-                <li><strong>Automatic Cleanup:</strong> All temporary data is cleared after conversion</li>
+            </div>
+
+            <div className="legal-section">
+              <h2 className="legal-heading">2. File Storage and Processing</h2>
+              <p className="legal-text">
+                Convertonix is designed with privacy in mind. Files uploaded for conversion are processed using our AI-powered conversion technology. Files are not stored permanently on our servers and are automatically deleted after processing is complete, typically within minutes. We do not retain copies of your converted files, and we do not access or view the contents of your files except as necessary to perform the conversion service you request.
+              </p>
+            </div>
+
+            <div className="legal-section">
+              <h2 className="legal-heading">3. Information We Collect</h2>
+              <p className="legal-text">We collect minimal information necessary to provide and improve our service:</p>
+              
+              <h3 className="legal-subheading">3.1. Information You Provide</h3>
+              <ul className="legal-list">
+                <li>Account information: If you create an account, we collect your email address and subscription status</li>
+                <li>Communication data: When you contact us, we collect the information you provide in your messages</li>
+              </ul>
+
+              <h3 className="legal-subheading">3.2. Automatically Collected Information</h3>
+              <ul className="legal-list">
+                <li>Usage data: Basic information about how you use the Service (e.g., conversion types, errors, features accessed)</li>
+                <li>Technical information: Browser type and version, device information, IP address (anonymized), operating system</li>
+                <li>Log data: Standard server logs including access times, pages viewed, and error logs</li>
+              </ul>
+
+              <p className="legal-text">
+                <strong>We do not collect or store:</strong> The contents of files you convert, personal information extracted from within your files, or any sensitive data beyond what is necessary to operate the Service.
+              </p>
+            </div>
+
+            <div className="legal-section">
+              <h2 className="legal-heading">4. How We Use Your Information</h2>
+              <p className="legal-text">We use the information we collect to:</p>
+              <ul className="legal-list">
+                <li>Provide, maintain, and improve the Service</li>
+                <li>Process your file conversion requests</li>
+                <li>Manage your account and subscription</li>
+                <li>Respond to your inquiries and provide customer support</li>
+                <li>Send you service-related communications (e.g., account updates, security alerts)</li>
+                <li>Analyze usage patterns to improve our Service and user experience</li>
+                <li>Detect, prevent, and address technical issues and security threats</li>
+                <li>Comply with legal obligations</li>
               </ul>
             </div>
-            <div className="technical-visual">
-              <div className="process-flow">
-                <div className="flow-step">
-                  <div className="step-icon">📁</div>
-                  <div className="step-text">Your File</div>
-                </div>
-                <div className="flow-arrow">→</div>
-                <div className="flow-step">
-                  <div className="step-icon">💻</div>
-                  <div className="step-text">Your Browser</div>
-                </div>
-                <div className="flow-arrow">→</div>
-                <div className="flow-step">
-                  <div className="step-icon">✨</div>
-                  <div className="step-text">Converted File</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Contact */}
-      <section className="privacy-contact">
-        <div className="container">
-          <h2 className="section-title">Questions About Privacy?</h2>
-          <p className="section-subtitle">
-            If you have any questions about our privacy practices or how we protect your data, 
-            please don't hesitate to contact us.
-          </p>
-          <div className="contact-info">
-            <div className="contact-item">
-              <Clock size={24} />
-              <div>
-                <h4>Response Time</h4>
-                <p>We respond to privacy inquiries within 24 hours</p>
-              </div>
+            <div className="legal-section">
+              <h2 className="legal-heading">5. Payment Information</h2>
+              <p className="legal-text">
+                Convertonix does not store or process payment card information directly. All payments are processed by Paddle Market Ltd. ("Paddle"), which acts as our merchant of record. Payment data, including credit card numbers, billing addresses, and other payment information, is handled securely by Paddle in accordance with their privacy policy and PCI-DSS compliance standards. We only receive non-sensitive information from Paddle about your subscription status and purchase history (e.g., subscription plan, payment status, transaction dates).
+              </p>
+              <p className="legal-text">
+                For more information about how Paddle handles your payment information, please review <a href="https://paddle.com/privacy" target="_blank" rel="noopener noreferrer" className="legal-link">Paddle's Privacy Policy</a>.
+              </p>
             </div>
-            <div className="contact-item">
-              <AlertCircle size={24} />
-              <div>
-                <h4>Report Issues</h4>
-                <p>Found a privacy concern? Report it immediately</p>
-              </div>
+
+            <div className="legal-section">
+              <h2 className="legal-heading">6. Data Sharing and Disclosure</h2>
+              <p className="legal-text">We do not sell, trade, or rent your personal information to third parties. We may share your information only in the following circumstances:</p>
+              <ul className="legal-list">
+                <li><strong>Service Providers:</strong> We may share information with trusted third-party service providers who perform services on our behalf (e.g., hosting, analytics, payment processing through Paddle), subject to confidentiality agreements</li>
+                <li><strong>Legal Requirements:</strong> We may disclose information if required by law, regulation, legal process, or government request</li>
+                <li><strong>Business Transfers:</strong> In the event of a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction</li>
+                <li><strong>With Your Consent:</strong> We may share information with your explicit consent</li>
+              </ul>
+              <p className="legal-text">
+                We may share anonymized, aggregated usage statistics for service improvement purposes, but this data cannot be used to identify individual users.
+              </p>
             </div>
-          </div>
-          <div className="contact-cta">
-            <button className="btn-primary" onClick={() => window.open('mailto:bgdevofficial@gmail.com?subject=Privacy Inquiry', '_blank')}>
-              Contact Privacy Team
-            </button>
+
+            <div className="legal-section">
+              <h2 className="legal-heading">7. Data Security</h2>
+              <p className="legal-text">
+                We implement appropriate technical and organizational measures to protect your information, including encryption in transit (HTTPS/TLS) and secure data storage practices. However, no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee absolute security. You use the Service at your own risk, and you are responsible for taking reasonable precautions to protect your account credentials.
+              </p>
+            </div>
+
+            <div className="legal-section">
+              <h2 className="legal-heading">8. Your Rights</h2>
+              <p className="legal-text">Depending on your location, you may have certain rights regarding your personal data, including:</p>
+              <ul className="legal-list">
+                <li><strong>Right to Access:</strong> Request a copy of the personal data we hold about you</li>
+                <li><strong>Right to Rectification:</strong> Request correction of inaccurate or incomplete data</li>
+                <li><strong>Right to Erasure:</strong> Request deletion of your personal data (subject to legal obligations)</li>
+                <li><strong>Right to Object:</strong> Object to processing of your personal data for certain purposes</li>
+                <li><strong>Right to Restrict Processing:</strong> Request restriction of processing your personal data</li>
+                <li><strong>Right to Data Portability:</strong> Request transfer of your data to another service provider</li>
+                <li><strong>Right to Withdraw Consent:</strong> Withdraw consent for data processing where consent is the legal basis</li>
+              </ul>
+              <p className="legal-text">
+                To exercise these rights, please contact us using the information provided in the "Contact Us" section below.
+              </p>
+            </div>
+
+            <div className="legal-section">
+              <h2 className="legal-heading">9. Cookies and Tracking Technologies</h2>
+              <p className="legal-text">
+                We use cookies and similar tracking technologies to track activity on our Service and hold certain information. Cookies are files with a small amount of data that are stored on your device. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our Service.
+              </p>
+            </div>
+
+            <div className="legal-section">
+              <h2 className="legal-heading">10. Children's Privacy</h2>
+              <p className="legal-text">
+                Our Service is not intended for individuals under the age of 13 (or the minimum age required in your jurisdiction). We do not knowingly collect personal information from children. If we become aware that we have collected personal information from a child without parental consent, we will take steps to delete that information.
+              </p>
+            </div>
+
+            <div className="legal-section">
+              <h2 className="legal-heading">11. International Data Transfers</h2>
+              <p className="legal-text">
+                Your information may be transferred to and processed in countries other than your country of residence. These countries may have data protection laws that differ from those in your country. By using our Service, you consent to the transfer of your information to these countries.
+              </p>
+            </div>
+
+            <div className="legal-section">
+              <h2 className="legal-heading">12. Changes to This Privacy Policy</h2>
+              <p className="legal-text">
+                We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date. Material changes will be communicated to you via email or through a notice on our Service. We encourage you to review this Privacy Policy periodically to stay informed about how we protect your information.
+              </p>
+            </div>
+
+            <div className="legal-section">
+              <h2 className="legal-heading">13. Contact Us</h2>
+              <p className="legal-text">
+                If you have any questions about this Privacy Policy or our privacy practices, please contact us:
+              </p>
+              <p className="legal-contact">
+                <strong>Email:</strong> <a href="mailto:bgdevofficial@gmail.com" className="legal-link">bgdevofficial@gmail.com</a>
+              </p>
+            </div>
+
+            <div className="legal-links">
+              <Link to="/terms" className="legal-link-btn">Terms of Service</Link>
+              <Link to="/refund" className="legal-link-btn">Refund Policy</Link>
+            </div>
+
           </div>
         </div>
       </section>

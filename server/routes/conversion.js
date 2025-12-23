@@ -66,8 +66,28 @@ router.post('/convert', upload.single('file'), async (req, res) => {
     const originalName = req.file.originalname.split('.')[0]
     const outputFilename = `${originalName}_converted.${outputFormat}`
 
+    // Set proper content type based on output format
+    const contentTypeMap = {
+      'pdf': 'application/pdf',
+      'jpg': 'image/jpeg',
+      'jpeg': 'image/jpeg',
+      'png': 'image/png',
+      'webp': 'image/webp',
+      'gif': 'image/gif',
+      'svg': 'image/svg+xml',
+      'txt': 'text/plain',
+      'html': 'text/html',
+      'mp4': 'video/mp4',
+      'webm': 'video/webm',
+      'mp3': 'audio/mpeg',
+      'wav': 'audio/wav',
+      'ogg': 'audio/ogg'
+    }
+    
+    const contentType = contentTypeMap[outputFormat.toLowerCase()] || `application/${outputFormat}`
+    
     // Send response
-    res.setHeader('Content-Type', `application/${outputFormat}`)
+    res.setHeader('Content-Type', contentType)
     res.setHeader('Content-Disposition', `attachment; filename="${outputFilename}"`)
     res.setHeader('Content-Length', outputBuffer.length)
     
@@ -80,10 +100,18 @@ router.post('/convert', upload.single('file'), async (req, res) => {
     })
 
   } catch (error) {
-    console.error('Conversion error:', error)
+    console.error('Conversion error:', {
+      message: error.message,
+      stack: error.stack,
+      inputFormat: req.body.inputFormat,
+      outputFormat: req.body.outputFormat,
+      fileName: req.file?.originalname
+    })
+    
     res.status(500).json({ 
       success: false, 
-      error: error.message || 'Conversion failed' 
+      error: error.message || 'Conversion failed',
+      details: process.env.NODE_ENV === 'development' ? error.stack : undefined
     })
   }
 })
@@ -178,9 +206,9 @@ router.post('/batch-convert', upload.array('files', 10), async (req, res) => {
 
 // Get supported formats endpoint
 router.get('/formats', (req, res) => {
-  const supportedFormats = {
+    const supportedFormats = {
     image: {
-      input: ['jpg', 'jpeg', 'png', 'webp', 'gif', 'bmp', 'svg'],
+      input: ['jpg', 'jpeg', 'png', 'webp', 'gif', 'bmp', 'svg', 'tiff', 'tif', 'ico', 'heic', 'heif', 'avif'],
       output: ['jpg', 'jpeg', 'png', 'webp', 'pdf']
     },
     document: {

@@ -17,14 +17,21 @@ import AuthModal from './components/AuthModal'
 import UserProfile from './components/UserProfile'
 import BackToTop from './components/BackToTop'
 import ErrorBoundary from './components/ErrorBoundary'
+import Toast from './components/Toast'
+import NewYearUpgradePrompt from './components/NewYearUpgradePrompt'
+import SnowEffect from './components/SnowEffect'
+import HowItWorks from './components/HowItWorks'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
 import apiService from './utils/apiService'
+import { NEW_YEAR_CAMPAIGN, isCampaignActive } from './config/campaign'
 
 // Lazy load pages for better performance
 const Features = lazy(() => import('./pages/Features'))
 const Pricing = lazy(() => import('./pages/Pricing'))
 const About = lazy(() => import('./pages/About'))
 const Privacy = lazy(() => import('./pages/Privacy'))
+const Terms = lazy(() => import('./pages/Terms'))
+const Refund = lazy(() => import('./pages/Refund'))
 const Support = lazy(() => import('./pages/Support'))
 const API = lazy(() => import('./pages/API'))
 const Blog = lazy(() => import('./pages/Blog'))
@@ -39,6 +46,10 @@ function AppContent({ generatedFile, setGeneratedFile }) {
   const [showAdvanced, setShowAdvanced] = useState(false)
   const [conversionHistory, setConversionHistory] = useState([])
   const [batchMode, setBatchMode] = useState(false)
+  const [toast, setToast] = useState(null)
+  const [showNewYearPrompt, setShowNewYearPrompt] = useState(false)
+  const [promptReason, setPromptReason] = useState(null)
+  const [showHowItWorks, setShowHowItWorks] = useState(false)
 
   const { user, isPremium, canConvert, trackConversion, getRemainingConversions } = useAuth()
 
@@ -130,14 +141,20 @@ function AppContent({ generatedFile, setGeneratedFile }) {
       console.log('Remaining conversions:', remaining)
       if (remaining !== undefined && remaining !== null && remaining <= 0) {
         console.log('❌ Conversion limit reached')
-        setShowPricing(true)
+        // Show New Year campaign prompt if active, otherwise show pricing modal
+        if (isCampaignActive(NEW_YEAR_CAMPAIGN)) {
+          setPromptReason('limit')
+          setShowNewYearPrompt(true)
+        } else {
+          setShowPricing(true)
+        }
         return
       }
     }
 
     if (!targetFormat) {
       console.log('❌ No format selected')
-      alert('Please select a format to convert to')
+      setToast({ message: 'Please select a format to convert to', type: 'warning' })
       return
     }
 
@@ -228,7 +245,7 @@ function AppContent({ generatedFile, setGeneratedFile }) {
       
     } catch (error) {
       console.error('❌ CONVERSION ERROR:', error)
-      alert('Conversion failed: ' + error.message)
+      setToast({ message: `Conversion failed: ${error.message}`, type: 'error' })
     } finally {
       setIsConverting(false)
       console.log('🏁 Conversion process completed')
@@ -273,15 +290,43 @@ function AppContent({ generatedFile, setGeneratedFile }) {
       
       <main className="container">
         <div className="hero">
+          <div className="hero-badge">
+            <span className="badge-text">✨ Free • Secure • AI-Powered</span>
+          </div>
+          
           <h1>
-            <span className="gradient-text">Convert Any File</span>
-            <br />Instantly with AI
-          </h1>
-          <p className="subtitle">
-            ⚡ Lightning-fast conversions • 🔒 100% private & secure • 🤖 AI-powered features
+            <span className="gradient-text">Convert any file</span>
             <br />
-            All processing happens in your browser. Your files never leave your device.
+            <span className="hero-subheading">instantly</span>
+          </h1>
+          
+          <p className="hero-description">
+            Free. Fast. Private. AI-powered conversion for 100+ formats.
+            <br />
+            <span className="hero-trust">No signup required • Files auto-deleted • 100% browser-based</span>
           </p>
+          
+          <div className="hero-cta">
+            <button 
+              className="btn-hero-primary"
+              onClick={() => document.querySelector('.dropzone')?.click()}
+            >
+              Convert Now
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+            <button 
+              className="btn-hero-secondary"
+              onClick={(e) => {
+                e.preventDefault()
+                console.log('How it works button clicked')
+                setShowHowItWorks(true)
+              }}
+            >
+              How it works
+            </button>
+          </div>
           
           <div className="hero-stats">
             <div className="stat">
@@ -289,12 +334,16 @@ function AppContent({ generatedFile, setGeneratedFile }) {
               <div className="stat-label">Files Converted</div>
             </div>
             <div className="stat">
-              <div className="stat-value">50+</div>
-              <div className="stat-label">File Formats</div>
+              <div className="stat-value">100+</div>
+              <div className="stat-label">Formats</div>
             </div>
             <div className="stat">
-              <div className="stat-value">⭐ 4.9</div>
-              <div className="stat-label">User Rating</div>
+              <div className="stat-value">4.9</div>
+              <div className="stat-label">Rating</div>
+            </div>
+            <div className="stat">
+              <div className="stat-value">0s</div>
+              <div className="stat-label">Upload Time</div>
             </div>
           </div>
         </div>
@@ -381,8 +430,9 @@ function AppContent({ generatedFile, setGeneratedFile }) {
             <a href="/features">Features</a>
             <a href="/pricing">Pricing</a>
             <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
+            <a href="/refund">Refund</a>
             <a href="/support">Support</a>
-            <a href="/api">API</a>
             <a href="/blog">Blog</a>
           </div>
           <p className="footer-copy">© 2025 Convertonix.com • Made by BGDev ⚡</p>
@@ -394,6 +444,20 @@ function AppContent({ generatedFile, setGeneratedFile }) {
         <div className="shortcuts-hint">
           <kbd>U</kbd> Upload
         </div>
+      )}
+
+      {/* Toast Notifications */}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
+
+      {/* How It Works Modal */}
+      {showHowItWorks && (
+        <HowItWorks onClose={() => setShowHowItWorks(false)} />
       )}
     </div>
   )
@@ -469,6 +533,8 @@ function AppWrapper() {
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/refund" element={<Refund />} />
             <Route path="/support" element={<Support />} />
             <Route path="/api" element={<API />} />
             <Route path="/blog" element={<Blog />} />

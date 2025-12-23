@@ -23,7 +23,7 @@ function ConversionOptions({ file, onConvert, isConverting, aiFeatures, setAiFea
         
         if (!selectedFormat) {
           console.log('⚠️ NO FORMAT SELECTED!')
-          alert('⚠️ Please select a format first!')
+          // Format selection is handled by parent component
           return
         }
         
@@ -151,7 +151,12 @@ function ConversionOptions({ file, onConvert, isConverting, aiFeatures, setAiFea
         </div>
       </div>
 
-      <h3>Convert to:</h3>
+      <div className="format-selector-header">
+        <h3>Convert to:</h3>
+        {!selectedFormat && (
+          <p className="format-hint">Select a format to continue</p>
+        )}
+      </div>
       <div className="format-options">
         {options.map((option) => {
           const Icon = option.icon
@@ -208,7 +213,7 @@ function ConversionOptions({ file, onConvert, isConverting, aiFeatures, setAiFea
           {isConverting ? (
             <>
               <span className="spinner"></span>
-              Converting...
+              <span>AI Processing<span className="ai-loading-dots"><span></span><span></span><span></span></span></span>
             </>
           ) : (
             <>

@@ -11,7 +11,8 @@ import {
   Zap,
   Shield,
   Brain,
-  TrendingUp
+  TrendingUp,
+  Sparkles
 } from 'lucide-react'
 import Particles from '../components/Particles'
 import BackToTop from '../components/BackToTop'
@@ -21,10 +22,10 @@ function Blog() {
   const [selectedCategory, setSelectedCategory] = useState('all')
 
   const categories = [
-    { id: 'all', name: 'All Posts', count: 7 },
+    { id: 'all', name: 'All Posts', count: 6 },
     { id: 'tutorials', name: 'Tutorials', count: 1 },
     { id: 'updates', name: 'Updates', count: 2 },
-    { id: 'tips', name: 'Tips & Tricks', count: 2 },
+    { id: 'tips', name: 'Tips & Tricks', count: 1 },
     { id: 'case-studies', name: 'Case Studies', count: 2 }
   ]
 
@@ -39,7 +40,6 @@ function Blog() {
       readTime: "8 min read",
       category: "updates",
       tags: ["AI", "Technology", "Innovation"],
-      image: "/api/placeholder/600/300",
       featured: true
     },
     {
@@ -52,7 +52,6 @@ function Blog() {
       readTime: "6 min read",
       category: "tips",
       tags: ["Privacy", "Security", "GDPR"],
-      image: "/api/placeholder/600/300",
       featured: false
     },
     {
@@ -65,7 +64,6 @@ function Blog() {
       readTime: "10 min read",
       category: "tutorials",
       tags: ["Batch Processing", "Tutorial", "Productivity"],
-      image: "/api/placeholder/600/300",
       featured: false
     },
     {
@@ -78,7 +76,6 @@ function Blog() {
       readTime: "12 min read",
       category: "case-studies",
       tags: ["Development", "Architecture", "Technology"],
-      image: "/api/placeholder/600/300",
       featured: true
     },
     {
@@ -89,13 +86,12 @@ function Blog() {
       author: "BGDev",
       date: "2025-01-15",
       readTime: "7 min read",
-      category: "tips",
+      category: "updates",
       tags: ["Tips", "Professional", "Workflow"],
-      image: "/api/placeholder/600/300",
       featured: false
     },
     {
-      id: 7,
+      id: 6,
       title: "Building BGDev: From Late-Night Coding to Digital Craft Studio",
       excerpt: "The story behind BGDev - how a startup built by creators for creators is reshaping digital experiences with modern, minimal, and powerful solutions.",
       content: "BGDev isn't just another development agency. We're a digital craft studio where every line of code, every pixel, and every animation has a reason...",
@@ -104,7 +100,6 @@ function Blog() {
       readTime: "6 min read",
       category: "case-studies",
       tags: ["BGDev", "Startup", "Digital Craft"],
-      image: "/api/placeholder/600/300",
       featured: true
     }
   ]
@@ -136,12 +131,9 @@ function Blog() {
         <div className="container">
           <h1>
             <span className="gradient-text">Blog</span>
-            <br />
-            Insights & Updates
           </h1>
           <p className="hero-subtitle">
-            Stay updated with the latest news, tutorials, and insights about file conversion, 
-            AI technology, and digital workflows.
+            Insights, tutorials, and updates about file conversion, AI technology, and digital workflows.
           </p>
           
           {/* Search and Filter */}
@@ -175,15 +167,18 @@ function Blog() {
 
       {/* Featured Posts */}
       {featuredPosts.length > 0 && (
-        <section className="featured-posts">
+        <section className="featured-posts premium-section">
           <div className="container">
             <h2 className="section-title">Featured Articles</h2>
+            <p className="section-subtitle">
+              Handpicked articles worth reading
+            </p>
             <div className="featured-grid">
               {featuredPosts.map(post => (
-                <article key={post.id} className="featured-post">
+                <article key={post.id} className="featured-post premium-card">
                   <div className="post-image">
                     <div className="image-placeholder">
-                      <BookOpen size={48} />
+                      <Sparkles size={48} />
                     </div>
                     <div className="post-category">{post.category}</div>
                   </div>
@@ -213,7 +208,7 @@ function Blog() {
                         <User size={16} />
                         {post.author}
                       </div>
-                      <button className="read-more">
+                      <button className="read-more premium-btn">
                         Read More
                         <ArrowRight size={16} />
                       </button>
@@ -227,56 +222,56 @@ function Blog() {
       )}
 
       {/* All Posts */}
-      <section className="all-posts">
+      <section className="all-posts premium-section">
         <div className="container">
           <h2 className="section-title">All Articles</h2>
-          <div className="posts-grid">
-            {filteredPosts.map(post => (
-              <article key={post.id} className="post-card">
-                <div className="post-image">
-                  <div className="image-placeholder">
-                    <BookOpen size={32} />
-                  </div>
-                  <div className="post-category">{post.category}</div>
-                </div>
-                <div className="post-content">
-                  <div className="post-meta">
-                    <span className="post-date">
-                      <Calendar size={14} />
-                      {formatDate(post.date)}
-                    </span>
-                    <span className="post-read-time">
-                      <Clock size={14} />
-                      {post.readTime}
-                    </span>
-                  </div>
-                  <h3 className="post-title">{post.title}</h3>
-                  <p className="post-excerpt">{post.excerpt}</p>
-                  <div className="post-tags">
-                    {post.tags.slice(0, 2).map(tag => (
-                      <span key={tag} className="tag">
-                        <Tag size={10} />
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="post-footer">
-                    <div className="post-author">
-                      <User size={14} />
-                      {post.author}
+          {filteredPosts.length > 0 ? (
+            <div className="posts-grid">
+              {filteredPosts.map(post => (
+                <article key={post.id} className="post-card premium-card">
+                  <div className="post-image">
+                    <div className="image-placeholder">
+                      <BookOpen size={32} />
                     </div>
-                    <button className="read-more">
-                      Read More
-                      <ArrowRight size={14} />
-                    </button>
+                    <div className="post-category">{post.category}</div>
                   </div>
-                </div>
-              </article>
-            ))}
-          </div>
-          
-          {filteredPosts.length === 0 && (
-            <div className="no-posts">
+                  <div className="post-content">
+                    <div className="post-meta">
+                      <span className="post-date">
+                        <Calendar size={14} />
+                        {formatDate(post.date)}
+                      </span>
+                      <span className="post-read-time">
+                        <Clock size={14} />
+                        {post.readTime}
+                      </span>
+                    </div>
+                    <h3 className="post-title">{post.title}</h3>
+                    <p className="post-excerpt">{post.excerpt}</p>
+                    <div className="post-tags">
+                      {post.tags.slice(0, 2).map(tag => (
+                        <span key={tag} className="tag">
+                          <Tag size={10} />
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="post-footer">
+                      <div className="post-author">
+                        <User size={14} />
+                        {post.author}
+                      </div>
+                      <button className="read-more premium-btn">
+                        Read More
+                        <ArrowRight size={14} />
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="no-posts premium-card">
               <BookOpen size={64} />
               <h3>No articles found</h3>
               <p>Try adjusting your search or filter criteria</p>
@@ -285,46 +280,41 @@ function Blog() {
         </div>
       </section>
 
-      {/* Newsletter */}
-      <section className="newsletter">
-        <div className="container">
-          <div className="newsletter-content">
-            <div className="newsletter-text">
-              <h2>Stay Updated</h2>
-              <p>Get the latest articles and updates delivered to your inbox.</p>
-            </div>
-            <div className="newsletter-form">
-              <input type="email" placeholder="Enter your email" />
-              <button className="btn-primary">Subscribe</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Topics */}
-      <section className="topics">
+      <section className="topics premium-section">
         <div className="container">
           <h2 className="section-title">Popular Topics</h2>
+          <p className="section-subtitle">
+            Explore our most popular content categories
+          </p>
           <div className="topics-grid">
-            <div className="topic-card">
-              <Brain size={32} />
+            <div className="topic-card premium-card">
+              <div className="topic-icon">
+                <Brain size={32} />
+              </div>
               <h3>AI & Machine Learning</h3>
-              <p>Explore how AI is transforming file conversion</p>
+              <p>Explore how AI is transforming file conversion and document processing</p>
             </div>
-            <div className="topic-card">
-              <Shield size={32} />
+            <div className="topic-card premium-card">
+              <div className="topic-icon">
+                <Shield size={32} />
+              </div>
               <h3>Privacy & Security</h3>
-              <p>Learn about privacy-first file processing</p>
+              <p>Learn about privacy-first file processing and data protection</p>
             </div>
-            <div className="topic-card">
-              <Zap size={32} />
+            <div className="topic-card premium-card">
+              <div className="topic-icon">
+                <Zap size={32} />
+              </div>
               <h3>Performance</h3>
-              <p>Tips for faster and more efficient conversions</p>
+              <p>Tips for faster and more efficient file conversions</p>
             </div>
-            <div className="topic-card">
-              <TrendingUp size={32} />
+            <div className="topic-card premium-card">
+              <div className="topic-icon">
+                <TrendingUp size={32} />
+              </div>
               <h3>Industry Trends</h3>
-              <p>Stay ahead of digital transformation trends</p>
+              <p>Stay ahead of digital transformation and technology trends</p>
             </div>
           </div>
         </div>

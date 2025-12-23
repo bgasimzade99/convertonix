@@ -14,6 +14,7 @@ import conversionRoutes from './routes/conversion.js'
 import aiRoutes from './routes/ai.js'
 import authRoutes from './routes/auth.js'
 import paymentRoutes from './routes/payment.js'
+import contactRoutes from './routes/contact.js'
 
 // Import AI proxy
 import { createAIProxy } from './ai-proxy.js'
@@ -43,11 +44,16 @@ const limiter = rateLimit({
 })
 app.use('/api/', limiter)
 
-// Create uploads directory if it doesn't exist
+// Create necessary directories if they don't exist
 const uploadsDir = path.join(__dirname, 'uploads')
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true })
-}
+const tempDir = path.join(__dirname, 'temp')
+
+[uploadsDir, tempDir].forEach(dir => {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true })
+    console.log(`Created directory: ${dir}`)
+  }
+})
 
 // Multer configuration for file uploads
 const storage = multer.diskStorage({
@@ -76,18 +82,53 @@ app.use('/api/convert', conversionRoutes)
 app.use('/api/ai', aiRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/payment', paymentRoutes)
+app.use('/api', contactRoutes)
 
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Server is running' })
 })
 
-// Error handling middleware
+// Error handling middleware - Professional implementation
 app.use((err, req, res, next) => {
-  console.error(err.stack)
-  res.status(500).json({
-    error: 'Something went wrong!',
-    message: process.env.NODE_ENV === 'development' ? err.message : undefined
+  console.error('Server Error:', {
+    message: err.message,
+    stack: err.stack,
+    url: req.url,
+    method: req.method,
+    timestamp: new Date().toISOString()
+  })
+  
+  // Handle multer errors (file upload errors)
+  if (err instanceof multer.MulterError) {
+    if (err.code === 'LIMIT_FILE_SIZE') {
+      return res.status(400).json({
+        success: false,
+        error: 'File size exceeds the maximum allowed limit (100MB)'
+      })
+    }
+    return res.status(400).json({
+      success: false,
+      error: `File upload error: ${err.message}`
+    })
+  }
+  
+  // Handle validation errors
+  if (err.name === 'ValidationError') {
+    return res.status(400).json({
+      success: false,
+      error: `Validation error: ${err.message}`
+    })
+  }
+  
+  // Generic error response
+  res.status(err.status || 500).json({
+    success: false,
+    error: err.message || 'Something went wrong!',
+    ...(process.env.NODE_ENV === 'development' && { 
+      stack: err.stack,
+      details: err
+    })
   })
 })
 

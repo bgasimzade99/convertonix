@@ -21,6 +21,11 @@ function FileUpload({ onFileUpload, batchMode = false }) {
 
   return (
     <div className="upload-section">
+      <div className="upload-trust-badge">
+        <span className="trust-icon">🔒</span>
+        <span className="trust-text">Files are processed locally in your browser. Never uploaded to servers.</span>
+      </div>
+      
       <div {...getRootProps()} className={`dropzone ${isDragActive ? 'active' : ''} ${batchMode ? 'batch-mode' : ''}`}>
         <input {...getInputProps()} />
         {batchMode ? <Files size={56} className="upload-icon" /> : <Upload size={56} className="upload-icon" />}
@@ -34,7 +39,7 @@ function FileUpload({ onFileUpload, batchMode = false }) {
             <p className="upload-subtext">
               or click to browse {batchMode && '(up to 10 files)'}
             </p>
-            <p className="upload-limit">Max file size: 100MB per file</p>
+            <p className="upload-limit">Max file size: 100MB per file • Auto-deleted after download</p>
           </>
         )}
       </div>

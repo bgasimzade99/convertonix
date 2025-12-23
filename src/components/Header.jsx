@@ -77,7 +77,7 @@ function Header({ darkMode, onToggleDarkMode, onShowHistory, onShowPricing, onSh
           ) : (
             <button className="btn-signin" onClick={onShowAuth}>
               <LogIn size={18} />
-              🔑 Sign In
+              <span>Sign In</span>
             </button>
           )}
         </nav>
