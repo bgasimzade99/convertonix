@@ -19,6 +19,28 @@ self.addEventListener('install', (event) => {
   )
 })
 
+// Helper function to check if request can be cached
+function canCacheRequest(request) {
+  const url = new URL(request.url)
+  
+  // Only cache GET requests
+  if (request.method !== 'GET') {
+    return false
+  }
+  
+  // Don't cache non-HTTP(S) schemes (chrome-extension://, data:, blob:, etc.)
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+    return false
+  }
+  
+  // Don't cache API calls
+  if (url.pathname.startsWith('/api')) {
+    return false
+  }
+  
+  return true
+}
+
 // Fetch event - Stale While Revalidate for everything
 self.addEventListener('fetch', (event) => {
   const { request } = event
@@ -30,18 +52,31 @@ self.addEventListener('fetch', (event) => {
     return
   }
 
-  // For all other requests (HTML, JS, CSS, images), use stale-while-revalidate
+  // Check if this request can be cached
+  if (!canCacheRequest(request)) {
+    // Just fetch without caching for unsupported requests
+    event.respondWith(fetch(request).catch(() => {
+      // Return a simple error response if fetch fails
+      return new Response('Network error', { status: 408 })
+    }))
+    return
+  }
+
+  // For cacheable requests (HTML, JS, CSS, images), use stale-while-revalidate
   event.respondWith(
     caches.match(request)
       .then((cachedResponse) => {
         // Always try to fetch fresh version
         const fetchPromise = fetch(request)
           .then((response) => {
-            // If we got a successful response, cache it
-            if (response.ok) {
+            // If we got a successful response and request is cacheable, cache it
+            if (response.ok && canCacheRequest(request)) {
               const responseClone = response.clone()
               caches.open(CACHE_NAME).then((cache) => {
-                cache.put(request, responseClone)
+                cache.put(request, responseClone).catch((error) => {
+                  // Silently fail if cache.put fails (e.g., for unsupported request types)
+                  console.warn('Cache put failed (non-critical):', error.message)
+                })
               })
             }
             return response
@@ -51,6 +86,8 @@ self.addEventListener('fetch', (event) => {
             if (cachedResponse) {
               return cachedResponse
             }
+            // Return error response if no cache available
+            return new Response('Network error', { status: 408 })
           })
 
         // Return cached version immediately if available, otherwise wait for fetch
