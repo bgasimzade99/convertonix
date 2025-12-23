@@ -2,33 +2,24 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- Favicons -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/svg+xml" sizes="any" href="/favicon-192.svg" />
-    <link rel="alternate icon" type="image/png" href="/favicon-192.svg" />
-    <link rel="manifest" href="/manifest.json" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Convertonix - File Converter</title>
+    <title>Redirecting...</title>
     <script>
-      // GitHub Pages SPA redirect fix
-      // Redirects 404 to index.html with path as query parameter
+      // GitHub Pages SPA redirect - Simple and reliable solution
+      // When GitHub Pages can't find a file, it serves 404.html
+      // We redirect to index.html with the path as a query parameter
       var path = window.location.pathname;
       var search = window.location.search;
       var hash = window.location.hash;
       
-      // Remove leading slash if present
-      path = path.replace(/^\//, '');
-      
-      // Build redirect URL
-      var redirect = '/index.html';
-      if (path && path !== 'index.html') {
-        redirect += '?p=' + encodeURIComponent(path);
-      }
+      // Build redirect URL to index.html with path as query param
+      var redirect = '/index.html?path=' + encodeURIComponent(path);
       if (search) {
-        redirect += (redirect.includes('?') ? '&' : '?') + search.substring(1);
+        redirect += '&' + search.substring(1);
       }
       redirect += hash;
       
+      // Use replace to avoid adding to history
       window.location.replace(redirect);
     </script>
   </head>
