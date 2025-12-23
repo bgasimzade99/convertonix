@@ -3,12 +3,19 @@
 export function register() {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      // Periodically check for updates (every 60 seconds)
+      // Periodically check for updates (every 5 minutes - less frequent to avoid errors)
       setInterval(() => {
-        navigator.serviceWorker.ready.then(registration => {
-          registration.update()
-        })
-      }, 60000)
+        if (navigator.serviceWorker.controller) {
+          navigator.serviceWorker.ready.then(registration => {
+            registration.update().catch(error => {
+              // Silently fail if update check fails (common in dev mode)
+              if (import.meta.env.PROD) {
+                console.warn('Service worker update check failed:', error)
+              }
+            })
+          })
+        }
+      }, 300000) // 5 minutes instead of 60 seconds
 
       navigator.serviceWorker
         .register('/service-worker.js')
@@ -28,9 +35,18 @@ export function register() {
 
           // Listen for messages from service worker
           navigator.serviceWorker.addEventListener('message', event => {
-            if (event.data && event.data.type === 'NEW_VERSION') {
-              window.location.reload()
+            try {
+              if (event.data && event.data.type === 'NEW_VERSION') {
+                window.location.reload()
+              }
+            } catch (error) {
+              console.error('Error handling service worker message:', error)
             }
+          })
+          
+          // Handle service worker controller changes
+          navigator.serviceWorker.addEventListener('controllerchange', () => {
+            window.location.reload()
           })
         })
         .catch(error => {
