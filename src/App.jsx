@@ -50,6 +50,7 @@ function AppContent({ generatedFile, setGeneratedFile }) {
   const [showNewYearPrompt, setShowNewYearPrompt] = useState(false)
   const [promptReason, setPromptReason] = useState(null)
   const [showHowItWorks, setShowHowItWorks] = useState(false)
+  const [showCampaign, setShowCampaign] = useState(false)
 
   const { user, isPremium, canConvert, trackConversion, getRemainingConversions } = useAuth()
 
@@ -61,6 +62,10 @@ function AppContent({ generatedFile, setGeneratedFile }) {
       setGeneratedFile(null)
     }
   }, [generatedFile, setGeneratedFile])
+
+  useEffect(() => {
+    setShowCampaign(isCampaignActive(NEW_YEAR_CAMPAIGN))
+  }, [])
   
   const [aiFeatures, setAiFeatures] = useState({
     ocr: false,
@@ -287,6 +292,7 @@ function AppContent({ generatedFile, setGeneratedFile }) {
   return (
     <div className="home-page">
       <Particles />
+      {showCampaign && <SnowEffect />}
       
       <main className="container">
         <div className="hero">
@@ -299,6 +305,11 @@ function AppContent({ generatedFile, setGeneratedFile }) {
             <br />
             <span className="hero-subheading">instantly</span>
           </h1>
+
+          <div className="hero-ice-strip">
+            <div className="ice-glow"></div>
+            <span className="ice-text">❄ Frost-fast conversions • Glacier-grade uptime</span>
+          </div>
           
           <p className="hero-description">
             Free. Fast. Private. AI-powered conversion for 100+ formats.
