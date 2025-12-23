@@ -2,28 +2,177 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" sizes="any" href="/favicon-192.svg" />
+    <link rel="alternate icon" type="image/png" href="/favicon-192.svg" />
+    <link rel="manifest" href="/manifest.json" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Redirecting...</title>
+    <meta name="author" content="Convertonix" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href="https://convertonix.com/" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0PSM1TDNTE"></script>
     <script>
-      // GitHub Pages SPA redirect - Simple and reliable solution
-      // When GitHub Pages can't find a file, it serves 404.html
-      // We redirect to index.html with the path as a query parameter
-      var path = window.location.pathname;
-      var search = window.location.search;
-      var hash = window.location.hash;
-      
-      // Build redirect URL to index.html with path as query param
-      var redirect = '/index.html?path=' + encodeURIComponent(path);
-      if (search) {
-        redirect += '&' + search.substring(1);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-0PSM1TDNTE');
+    </script>
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2494864403549037"
+     crossorigin="anonymous"></script>
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://convertonix.com/" />
+    <meta property="og:title" content="Free File Converter - PDF to Word, JPG to PNG, Word to PDF | Convertonix" />
+    <meta property="og:description" content="Free online file converter. Convert PDF to Word, JPG to PNG, images and documents instantly. 100% free, secure, works in browser." />
+    <meta property="og:image" content="https://convertonix.com/og-image.svg" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://convertonix.com/" />
+    <meta property="twitter:title" content="Free File Converter - PDF to Word, JPG to PNG | Convertonix" />
+    <meta property="twitter:description" content="Free online file converter. Convert PDF, Word, images instantly. No registration required." />
+    <meta property="twitter:image" content="https://convertonix.com/og-image.svg" />
+    
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1e293b" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Convertonix" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+    
+    <title>Free File Converter Online - PDF, Image, Word, JPG to PNG | Convertonix</title>
+    
+    <!-- Enhanced SEO Keywords -->
+    <meta name="description" content="Free online file converter. Convert PDF to Word, JPG to PNG, Word to PDF, images, documents instantly. 100% free, secure, works in browser. No registration required." />
+    <meta name="keywords" content="file converter, pdf to word, word to pdf, jpg to png, png to jpg, jpeg converter, pdf converter, image converter, free converter, online converter, convert file, docx converter, png to jpg converter, pdf to docx, heic to jpg, image to pdf, pdf merger, compress pdf, compress image, free online converter, convert files online, file conversion tool" />
+    
+    <!-- Structured Data for Better SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Convertonix",
+      "description": "Free online file converter. Convert PDF, Word, images, and more instantly. 100% secure, works in your browser.",
+      "url": "https://convertonix.com",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "1500",
+        "bestRating": "5"
+      },
+      "featureList": [
+        "PDF to Word converter",
+        "Word to PDF converter",
+        "JPG to PNG converter",
+        "PNG to JPG converter",
+        "Image converter",
+        "Free file converter",
+        "No registration required",
+        "Works in browser"
+      ],
+      "creator": {
+        "@type": "Organization",
+        "name": "Convertonix"
       }
-      redirect += hash;
-      
-      // Use replace to avoid adding to history
-      window.location.replace(redirect);
+    }
+    </script>
+    
+    <!-- FAQ Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How to convert PDF to Word?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Upload your PDF file, select Word as output format, and click convert. Our free converter works instantly in your browser."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to convert JPG to PNG?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Simply upload your JPG image, choose PNG format, and download. Fast, free, and secure - no registration needed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this file converter free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, Convertonix is 100% free. Convert unlimited files with no registration required. All processing happens in your browser."
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- GitHub Pages SPA redirect fix - CRITICAL: Must be in HEAD before React loads -->
+    <script type="text/javascript">
+      // Fix URL immediately when 404.html is served
+      // This happens BEFORE React Router initializes
+      (function() {
+        var path = window.location.pathname;
+        // Only fix if we're on a route (not root or index.html)
+        if (path !== '/' && path !== '/index.html') {
+          // Store the path and redirect to index.html with path as query param
+          var redirect = '/index.html?path=' + encodeURIComponent(path);
+          if (window.location.search) {
+            redirect += '&' + window.location.search.substring(1);
+          }
+          redirect += window.location.hash;
+          window.location.replace(redirect);
+        }
+      })();
     </script>
   </head>
   <body>
-    <p>Redirecting...</p>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    
+    <!-- GitHub Pages SPA redirect fix - Restore path from query parameter -->
+    <script type="text/javascript">
+      // Restore the correct path from query parameter BEFORE React Router loads
+      (function() {
+        var urlParams = new URLSearchParams(window.location.search);
+        var path = urlParams.get('path');
+        if (path) {
+          // Decode the path
+          path = decodeURIComponent(path);
+          // Ensure it starts with /
+          if (!path.startsWith('/')) {
+            path = '/' + path;
+          }
+          // Remove path from query params
+          urlParams.delete('path');
+          var newSearch = urlParams.toString();
+          var newUrl = path + (newSearch ? '?' + newSearch : '') + window.location.hash;
+          
+          // Replace URL without reload - React Router will see the correct path
+          window.history.replaceState(null, null, newUrl);
+        }
+      })();
+    </script>
   </body>
 </html>
