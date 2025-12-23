@@ -1,8 +1,8 @@
 import { Helmet } from 'react-helmet-async'
 
 export function SEOHead({ 
-  title = "Convertonix - AI-Powered File Converter", 
-  description = "Convert any file instantly with AI. Professional document conversion, image processing, video conversion, and more. Privacy-first, secure, and lightning-fast.",
+  title = "AI-Powered File Converter - Convert 100+ Formats Instantly | Convertonix", 
+  description = "AI-Powered Professional File Converter - Convert 100+ formats instantly. PDF to Word, images, videos & documents. 100% free, secure, privacy-first. Works in browser - no download required. The smartest way to convert files online.",
   keywords = "file converter, AI conversion, document converter, image converter, video converter, PDF converter, privacy-first",
   image = "/og-image.svg",
   url = "",
