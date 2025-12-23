@@ -131,30 +131,6 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-    
-    <!-- GitHub Pages SPA redirect fix -->
-    <script type="text/javascript">
-      // Restore the correct path from query parameter before React Router loads
-      (function() {
-        var urlParams = new URLSearchParams(window.location.search);
-        var path = urlParams.get('path');
-        if (path) {
-          // Decode the path
-          path = decodeURIComponent(path);
-          // Ensure it starts with /
-          if (!path.startsWith('/')) {
-            path = '/' + path;
-          }
-          // Remove the path query parameter from URL
-          urlParams.delete('path');
-          var newSearch = urlParams.toString();
-          var newUrl = path + (newSearch ? '?' + newSearch : '') + window.location.hash;
-          
-          // Replace the current URL without reload - this happens BEFORE React Router initializes
-          window.history.replaceState(null, null, newUrl);
-        }
-      })();
-    </script>
   </body>
 </html>
 
