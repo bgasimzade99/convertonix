@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node -e \"const fs = require('fs'); if (fs.existsSync('dist/index.html')) fs.copyFileSync('dist/index.html', 'dist/404.html');\"",
+    "build": "vite build && node -e \"const fs = require('fs'); if (fs.existsSync('dist/index.html')) fs.copyFileSync('dist/index.html', 'dist/404.html'); if (fs.existsSync('public/_redirects')) fs.copyFileSync('public/_redirects', 'dist/_redirects');\"",
     "preview": "vite preview",
     "server": "node server/index.js",
     "dev:full": "concurrently \"npm run dev\" \"npm run server\""
@@ -17,6 +17,7 @@
     "docx": "^8.5.0",
     "file-saver": "^2.0.5",
     "heic2any": "^0.0.4",
+    "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
     "lucide-react": "^0.294.0",
     "mammoth": "^1.6.0",
@@ -25,9 +26,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
+    "react-helmet-async": "^2.0.4",
     "react-icons": "^4.12.0",
     "react-router-dom": "^7.9.3",
-    "react-helmet-async": "^2.0.4",
     "tesseract.js": "^5.0.4",
     "xlsx": "^0.18.5"
   },
