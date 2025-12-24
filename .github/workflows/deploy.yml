@@ -1,8 +1,9 @@
 name: Deploy to GitHub Pages
 
+# DISABLED - Now using Netlify for deployment
+# This workflow is disabled to prevent GitHub Pages deployment
 on:
-  push:
-    branches: [ main ]
+  workflow_dispatch: # Manual trigger only - automatic deployment disabled
 
 permissions:
   contents: read
