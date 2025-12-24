@@ -99,7 +99,7 @@ function UserSettings({ isOpen, onClose }) {
         {/* Premium Header */}
         <div className="premium-settings-header">
           <div className="premium-header-icon">
-            <Settings size={32} />
+            <Settings size={24} />
           </div>
           <div className="premium-header-content">
             <h2>Settings</h2>
