@@ -2,14 +2,21 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- Favicons - Google Search Optimization -->
-    <link rel="icon" type="image/svg+xml" href="https://convertonix.com/favicon.svg" />
-    <link rel="icon" type="image/svg+xml" sizes="any" href="https://convertonix.com/favicon-192.svg" />
-    <link rel="icon" type="image/svg+xml" sizes="192x192" href="https://convertonix.com/favicon-192.svg" />
-    <link rel="icon" type="image/svg+xml" sizes="512x512" href="https://convertonix.com/favicon-192.svg" />
-    <link rel="shortcut icon" href="https://convertonix.com/favicon.svg" />
-    <link rel="apple-touch-icon" href="https://convertonix.com/favicon-192.svg" />
-    <link rel="apple-touch-icon" sizes="192x192" href="https://convertonix.com/favicon-192.svg" />
+    <!-- Favicons - Google Search Optimization (PNG Priority for Google Search) -->
+    <!-- Primary favicon - PNG format for Google Search (must be in root, relative path) -->
+    <link rel="icon" href="/favicon.png?v=2" type="image/png" sizes="96x96" />
+    <link rel="icon" href="/favicon-64.png?v=2" type="image/png" sizes="64x64" />
+    
+    <!-- SVG fallbacks for modern browsers -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" sizes="any" href="/favicon-192.svg" />
+    
+    <!-- Apple touch icons -->
+    <link rel="apple-touch-icon" href="/favicon-192.svg" />
+    <link rel="apple-touch-icon" sizes="192x192" href="/favicon-192.svg" />
+    
+    <!-- Legacy shortcut icon -->
+    <link rel="shortcut icon" href="/favicon.png?v=2" type="image/png" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="author" content="Convertonix" />
@@ -127,12 +134,95 @@
             "@type": "Answer",
             "text": "Yes, Convertonix is 100% free. Convert 100+ file formats instantly with no registration required. AI-powered, secure, privacy-first - all processing happens in your browser."
           }
+        },
+        {
+          "@type": "Question",
+          "name": "Are my files secure when converting?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Absolutely. Convertonix processes all files locally in your browser. Your files never leave your device, ensuring complete privacy and security. No uploads, no storage, no tracking."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What file formats does Convertonix support?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Convertonix supports over 100 file formats including PDF, DOCX, XLSX, PPTX, JPG, PNG, GIF, WEBP, HEIC, MP4, MP3, WAV, and many more. Check our Features page for the complete list."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I convert multiple files at once?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, Convertonix supports batch file conversion. You can convert multiple files simultaneously, saving time and effort by processing entire folders in a single operation."
+          }
         }
       ]
     }
     </script>
-    <script type="module" crossorigin src="/assets/index-DPiL9zHk.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-U6WybNpS.css">
+    
+    <!-- Organization Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Convertonix",
+      "url": "https://convertonix.com",
+      "logo": "https://convertonix.com/favicon-192.svg",
+      "description": "AI-Powered Professional File Converter - Convert 100+ formats instantly. PDF to Word, images, videos & documents. 100% free, secure, privacy-first.",
+      "sameAs": [
+        "https://bgdevofficial.com"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "bgdevofficial@gmail.com",
+        "contactType": "Customer Support"
+      },
+      "founder": {
+        "@type": "Person",
+        "name": "Babak Gasimzade",
+        "url": "https://bgdevofficial.com"
+      }
+    }
+    </script>
+    
+    <!-- Breadcrumb Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://convertonix.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Features",
+          "item": "https://convertonix.com/features"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Pricing",
+          "item": "https://convertonix.com/pricing"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "About",
+          "item": "https://convertonix.com/about"
+        }
+      ]
+    }
+    </script>
+    <script type="module" crossorigin src="/assets/index-CzWAhK_7.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-DzWT4wWS.css">
   </head>
   <body>
     <div id="root"></div>
