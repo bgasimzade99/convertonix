@@ -18,6 +18,7 @@ import {
 } from 'lucide-react'
 import Particles from '../components/Particles'
 import BackToTop from '../components/BackToTop'
+import Footer from '../components/Footer'
 import { useNavigate } from 'react-router-dom'
 
 function Features() {
@@ -323,6 +324,7 @@ function Features() {
         </div>
       </section>
       
+      <Footer />
       <BackToTop />
     </div>
   )

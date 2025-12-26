@@ -14,8 +14,10 @@ import {
   TrendingUp,
   Sparkles
 } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import Particles from '../components/Particles'
 import BackToTop from '../components/BackToTop'
+import Footer from '../components/Footer'
 
 function Blog() {
   const [searchQuery, setSearchQuery] = useState('')
@@ -23,82 +25,84 @@ function Blog() {
 
   const categories = [
     { id: 'all', name: 'All Posts', count: 6 },
-    { id: 'tutorials', name: 'Tutorials', count: 1 },
-    { id: 'updates', name: 'Updates', count: 2 },
-    { id: 'tips', name: 'Tips & Tricks', count: 1 },
-    { id: 'case-studies', name: 'Case Studies', count: 2 }
+    { id: 'Technology', name: 'Technology', count: 2 },
+    { id: 'Privacy', name: 'Privacy', count: 1 },
+    { id: 'Tutorial', name: 'Tutorial', count: 1 },
+    { id: 'Development', name: 'Development', count: 1 },
+    { id: 'Tips', name: 'Tips', count: 1 },
+    { id: 'Company', name: 'Company', count: 1 }
   ]
 
   const blogPosts = [
     {
       id: 1,
+      slug: 'future-of-file-conversion-ai-powered-processing',
       title: "The Future of File Conversion: AI-Powered Processing",
       excerpt: "Explore how artificial intelligence is revolutionizing file conversion, making it faster, more accurate, and more intelligent than ever before.",
-      content: "In this comprehensive guide, we dive deep into the world of AI-powered file conversion...",
-      author: "BGDev",
+      author: "BGDev Team",
       date: "2025-01-25",
       readTime: "8 min read",
-      category: "updates",
+      category: "Technology",
       tags: ["AI", "Technology", "Innovation"],
       featured: true
     },
     {
       id: 2,
+      slug: 'privacy-first-file-conversion-why-it-matters',
       title: "Privacy-First File Conversion: Why It Matters",
       excerpt: "Learn why privacy-first file conversion is crucial in today's digital landscape and how Convertonix ensures your data never leaves your device.",
-      content: "Privacy is not just a feature—it's a fundamental right. In this article...",
-      author: "BGDev",
+      author: "BGDev Team",
       date: "2025-01-22",
       readTime: "6 min read",
-      category: "tips",
+      category: "Privacy",
       tags: ["Privacy", "Security", "GDPR"],
       featured: false
     },
     {
       id: 3,
+      slug: 'batch-file-conversion-complete-guide',
       title: "Batch File Conversion: A Complete Guide",
       excerpt: "Master the art of batch file conversion with our comprehensive tutorial covering everything from setup to advanced techniques.",
-      content: "Batch processing is one of the most powerful features of modern file converters...",
-      author: "BGDev",
+      author: "BGDev Team",
       date: "2025-01-20",
       readTime: "10 min read",
-      category: "tutorials",
+      category: "Tutorial",
       tags: ["Batch Processing", "Tutorial", "Productivity"],
       featured: false
     },
     {
       id: 4,
+      slug: 'how-we-built-convertonix-technical-deep-dive',
       title: "How We Built Convertonix: A Technical Deep Dive",
       excerpt: "Behind the scenes look at the technology stack and architecture that powers Convertonix's lightning-fast file conversion.",
-      content: "Building a file conversion platform that processes files locally while maintaining...",
-      author: "BGDev",
+      author: "Babak Gasimzade",
       date: "2025-01-18",
       readTime: "12 min read",
-      category: "case-studies",
+      category: "Development",
       tags: ["Development", "Architecture", "Technology"],
       featured: true
     },
     {
       id: 5,
+      slug: '10-file-conversion-tips-professional',
       title: "10 File Conversion Tips Every Professional Should Know",
       excerpt: "Professional tips and tricks to optimize your file conversion workflow and get the best results every time.",
-      content: "Whether you're a designer, developer, or business professional...",
-      author: "BGDev",
+      author: "BGDev Team",
       date: "2025-01-15",
       readTime: "7 min read",
-      category: "updates",
+      category: "Tips",
       tags: ["Tips", "Professional", "Workflow"],
       featured: false
     },
     {
       id: 6,
+      slug: 'building-bgdev-digital-craft-studio',
       title: "Building BGDev: From Late-Night Coding to Digital Craft Studio",
       excerpt: "The story behind BGDev - how a startup built by creators for creators is reshaping digital experiences with modern, minimal, and powerful solutions.",
-      content: "BGDev isn't just another development agency. We're a digital craft studio where every line of code, every pixel, and every animation has a reason...",
-      author: "BGDev",
+      author: "Babak Gasimzade",
       date: "2025-01-10",
       readTime: "6 min read",
-      category: "case-studies",
+      category: "Company",
       tags: ["BGDev", "Startup", "Digital Craft"],
       featured: true
     }
@@ -208,10 +212,10 @@ function Blog() {
                         <User size={16} />
                         {post.author}
                       </div>
-                      <button className="read-more premium-btn">
+                      <Link to={`/blog/${post.slug}`} className="read-more premium-btn">
                         Read More
                         <ArrowRight size={16} />
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </article>
@@ -261,10 +265,10 @@ function Blog() {
                         <User size={14} />
                         {post.author}
                       </div>
-                      <button className="read-more premium-btn">
+                      <Link to={`/blog/${post.slug}`} className="read-more premium-btn">
                         Read More
                         <ArrowRight size={14} />
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </article>
@@ -320,6 +324,7 @@ function Blog() {
         </div>
       </section>
       
+      <Footer />
       <BackToTop />
     </div>
   )

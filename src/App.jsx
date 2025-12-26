@@ -21,6 +21,7 @@ import Toast from './components/Toast'
 import NewYearUpgradePrompt from './components/NewYearUpgradePrompt'
 import SnowEffect from './components/SnowEffect'
 import HowItWorks from './components/HowItWorks'
+import Footer from './components/Footer'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
 import apiService from './utils/apiService'
 import { NEW_YEAR_CAMPAIGN, isCampaignActive } from './config/campaign'
@@ -33,8 +34,8 @@ const Privacy = lazy(() => import('./pages/Privacy'))
 const Terms = lazy(() => import('./pages/Terms'))
 const Refund = lazy(() => import('./pages/Refund'))
 const Support = lazy(() => import('./pages/Support'))
-const API = lazy(() => import('./pages/API'))
 const Blog = lazy(() => import('./pages/Blog'))
+const BlogPost = lazy(() => import('./pages/BlogPost'))
 
 function AppContent({ generatedFile, setGeneratedFile }) {
   const [uploadedFiles, setUploadedFiles] = useState([])
@@ -121,6 +122,21 @@ function AppContent({ generatedFile, setGeneratedFile }) {
       setUploadedFiles([files[0]])
     }
     setConvertedFile(null)
+    
+    // Scroll to conversion section after a short delay to ensure DOM is updated
+    setTimeout(() => {
+      const conversionSection = document.getElementById('conversion-section')
+      if (conversionSection) {
+        const headerOffset = 80
+        const elementPosition = conversionSection.getBoundingClientRect().top
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        })
+      }
+    }, 150)
   }, [batchMode])
 
   const handleConvert = async (targetFormat, options = {}) => {
@@ -377,6 +393,180 @@ function AppContent({ generatedFile, setGeneratedFile }) {
               batchMode={batchMode}
             />
             <AIFeatures />
+            
+            {/* Rich Content Sections for AdSense */}
+            <section className="homepage-content-sections">
+              <div className="content-section">
+                <h2 className="section-title">Why Choose Convertonix?</h2>
+                <div className="features-grid-home">
+                  <div className="feature-card-home">
+                    <div className="feature-icon-home">🛡️</div>
+                    <h3>Privacy-First Design</h3>
+                    <p>
+                      All file conversions happen directly in your browser. Your files never leave your device, 
+                      ensuring complete privacy and security. No uploads, no storage, no tracking - just pure conversion.
+                    </p>
+                  </div>
+                  <div className="feature-card-home">
+                    <div className="feature-icon-home">🧠</div>
+                    <h3>AI-Powered Technology</h3>
+                    <p>
+                      Our advanced AI algorithms ensure accurate conversions with preserved formatting, images, 
+                      and diagrams. Experience intelligent document processing like never before.
+                    </p>
+                  </div>
+                  <div className="feature-card-home">
+                    <div className="feature-icon-home">⚡</div>
+                    <h3>Lightning Fast</h3>
+                    <p>
+                      Convert files instantly with optimized processing algorithms. No waiting, no queues - 
+                      just drag, drop, and download your converted files in seconds.
+                    </p>
+                  </div>
+                  <div className="feature-card-home">
+                    <div className="feature-icon-home">📦</div>
+                    <h3>Batch Processing</h3>
+                    <p>
+                      Convert multiple files at once with our batch processing feature. Save time and effort 
+                      by processing entire folders in a single operation.
+                    </p>
+                  </div>
+                  <div className="feature-card-home">
+                    <div className="feature-icon-home">🌍</div>
+                    <h3>100+ Formats Supported</h3>
+                    <p>
+                      From PDF to Word, images to videos, documents to archives - we support over 100 file formats. 
+                      Whatever you need to convert, Convertonix has you covered.
+                    </p>
+                  </div>
+                  <div className="feature-card-home">
+                    <div className="feature-icon-home">🆓</div>
+                    <h3>100% Free</h3>
+                    <p>
+                      No hidden costs, no premium walls. All core features are completely free. 
+                      Convert unlimited files without registration or credit card requirements.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="content-section">
+                <h2 className="section-title">How Convertonix Works</h2>
+                <div className="how-it-works-steps">
+                  <div className="step-item">
+                    <div className="step-number">1</div>
+                    <h3>Upload Your File</h3>
+                    <p>
+                      Simply drag and drop your file onto the upload area, or click to browse. 
+                      Supports files up to 100MB with no registration required.
+                    </p>
+                  </div>
+                  <div className="step-item">
+                    <div className="step-number">2</div>
+                    <h3>Select Output Format</h3>
+                    <p>
+                      Choose from 100+ supported formats including PDF, Word, Excel, PowerPoint, 
+                      images, videos, and audio files.
+                    </p>
+                  </div>
+                  <div className="step-item">
+                    <div className="step-number">3</div>
+                    <h3>AI Processing</h3>
+                    <p>
+                      Our AI-powered engine processes your file locally in your browser. 
+                      Advanced algorithms preserve formatting, images, tables, and diagrams.
+                    </p>
+                  </div>
+                  <div className="step-item">
+                    <div className="step-number">4</div>
+                    <h3>Download Result</h3>
+                    <p>
+                      Get your converted file instantly. All processing happens in real-time, 
+                      and your original file remains untouched on your device.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="content-section">
+                <h2 className="section-title">Popular Conversion Types</h2>
+                <div className="conversion-types">
+                  <div className="conversion-type-item">
+                    <h3>PDF Conversions</h3>
+                    <p>
+                      Convert PDF to Word (DOCX), Excel (XLSX), PowerPoint (PPTX), images (JPG, PNG), 
+                      or extract text to plain text files. Preserve formatting, images, and layouts perfectly.
+                    </p>
+                    <ul>
+                      <li>PDF to Word - Maintains formatting and structure</li>
+                      <li>PDF to Images - Extract pages as high-quality images</li>
+                      <li>PDF to Excel - Convert tables and data accurately</li>
+                      <li>PDF to PowerPoint - Transform presentations seamlessly</li>
+                    </ul>
+                  </div>
+                  <div className="conversion-type-item">
+                    <h3>Document Conversions</h3>
+                    <p>
+                      Convert between Word (DOCX, DOC), Excel (XLSX, XLS), PowerPoint (PPTX, PPT), 
+                      and other document formats while preserving all content, formatting, and metadata.
+                    </p>
+                    <ul>
+                      <li>Word to PDF - Create professional PDFs instantly</li>
+                      <li>Excel to CSV - Export spreadsheet data easily</li>
+                      <li>PowerPoint to PDF - Convert presentations to PDF</li>
+                      <li>Document to HTML - Publish documents online</li>
+                    </ul>
+                  </div>
+                  <div className="conversion-type-item">
+                    <h3>Image Conversions</h3>
+                    <p>
+                      Convert between JPG, PNG, GIF, WEBP, HEIC, SVG, BMP, TIFF and more. 
+                      Adjust quality, resize dimensions, and optimize file sizes as needed.
+                    </p>
+                    <ul>
+                      <li>JPG to PNG - Convert with transparency support</li>
+                      <li>HEIC to JPG - Convert iPhone photos easily</li>
+                      <li>Image to PDF - Combine images into PDF documents</li>
+                      <li>Format optimization - Reduce file sizes without quality loss</li>
+                    </ul>
+                  </div>
+                  <div className="conversion-type-item">
+                    <h3>Media Conversions</h3>
+                    <p>
+                      Convert video and audio files between formats. Extract audio from videos, 
+                      compress files, and optimize quality for your needs.
+                    </p>
+                    <ul>
+                      <li>Video format conversion - MP4, AVI, MOV, WebM, MKV</li>
+                      <li>Audio format conversion - MP3, WAV, AAC, FLAC, OGG</li>
+                      <li>Audio extraction from videos</li>
+                      <li>Quality optimization and compression</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="content-section">
+                <h2 className="section-title">About Convertonix</h2>
+                <div className="about-content">
+                  <p>
+                    Convertonix is a cutting-edge file conversion platform developed by BGDev, a digital craft studio 
+                    focused on creating modern, minimal, and powerful web solutions. Built with privacy-first principles, 
+                    Convertonix processes all files locally in your browser, ensuring your data never leaves your device.
+                  </p>
+                  <p>
+                    Our mission is to make file conversion simple, fast, and accessible to everyone. Whether you're a 
+                    student converting documents, a designer optimizing images, or a professional managing files, 
+                    Convertonix provides the tools you need without compromising on privacy or quality.
+                  </p>
+                  <p>
+                    With support for over 100 file formats, AI-powered processing, and batch conversion capabilities, 
+                    Convertonix is the go-to solution for millions of users worldwide. All conversions are performed 
+                    using advanced algorithms that preserve formatting, maintain quality, and deliver results instantly.
+                  </p>
+                </div>
+              </div>
+            </section>
           </>
         ) : convertedFile ? (
           <ConversionResult 
@@ -388,23 +578,27 @@ function AppContent({ generatedFile, setGeneratedFile }) {
           />
         ) : (
           batchMode && uploadedFiles.length > 1 ? (
-            <BatchConverter
-              files={uploadedFiles}
-              onConvert={handleConvert}
-              isConverting={isConverting}
-              aiFeatures={aiFeatures}
-              setAiFeatures={setAiFeatures}
-              onCancel={handleReset}
-            />
+            <div className="batch-converter-section" id="conversion-section">
+              <BatchConverter
+                files={uploadedFiles}
+                onConvert={handleConvert}
+                isConverting={isConverting}
+                aiFeatures={aiFeatures}
+                setAiFeatures={setAiFeatures}
+                onCancel={handleReset}
+              />
+            </div>
           ) : (
-            <ConversionOptions
-              file={uploadedFiles[0]}
-              onConvert={handleConvert}
-              isConverting={isConverting}
-              aiFeatures={aiFeatures}
-              setAiFeatures={setAiFeatures}
-              onCancel={handleReset}
-            />
+            <div className="conversion-options-section" id="conversion-section">
+              <ConversionOptions
+                file={uploadedFiles[0]}
+                onConvert={handleConvert}
+                isConverting={isConverting}
+                aiFeatures={aiFeatures}
+                setAiFeatures={setAiFeatures}
+                onCancel={handleReset}
+              />
+            </div>
           )
         )}
       </main>
@@ -426,29 +620,7 @@ function AppContent({ generatedFile, setGeneratedFile }) {
         />
       )}
 
-      <footer className="footer">
-        <div className="footer-content">
-          <p>🛡️ <strong>Privacy-First:</strong> All conversions happen in your browser. No files uploaded to servers.</p>
-          <div className="footer-features">
-            <span>🧠 AI-Powered</span>
-            <span>⚡ Lightning Fast</span>
-            <span>🎯 100% Accurate</span>
-            <span>📦 Batch Processing</span>
-            <span>🌙 Dark Mode</span>
-            <span>⌨️ Keyboard Shortcuts</span>
-          </div>
-          <div className="footer-links">
-            <a href="/features">Features</a>
-            <a href="/pricing">Pricing</a>
-            <a href="/privacy">Privacy</a>
-            <a href="/terms">Terms</a>
-            <a href="/refund">Refund</a>
-            <a href="/support">Support</a>
-            <a href="/blog">Blog</a>
-          </div>
-          <p className="footer-copy">© 2025 Convertonix.com • Made by BGDev ⚡</p>
-        </div>
-      </footer>
+      <Footer />
       
       {/* Keyboard shortcuts helper - Desktop only */}
       {window.innerWidth >= 768 && (
@@ -547,8 +719,8 @@ function AppWrapper() {
             <Route path="/terms" element={<Terms />} />
             <Route path="/refund" element={<Refund />} />
             <Route path="/support" element={<Support />} />
-            <Route path="/api" element={<API />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
           </Routes>
         </Suspense>
 

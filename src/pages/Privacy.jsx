@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Particles from '../components/Particles'
 import BackToTop from '../components/BackToTop'
+import Footer from '../components/Footer'
 
 function Privacy() {
   return (
@@ -171,6 +172,7 @@ function Privacy() {
         </div>
       </section>
       
+      <Footer />
       <BackToTop />
     </div>
   )

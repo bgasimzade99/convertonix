@@ -19,6 +19,7 @@ import {
 } from 'lucide-react'
 import Particles from '../components/Particles'
 import BackToTop from '../components/BackToTop'
+import Footer from '../components/Footer'
 import NewYearBanner from '../components/NewYearBanner'
 import SnowEffect from '../components/SnowEffect'
 import PlanFeaturesModal from '../components/PlanFeaturesModal'
@@ -71,15 +72,15 @@ function Pricing() {
       icon: <Zap size={32} />,
       popular: false,
       highlight: false,
-      features: [
+            features: [
         { text: "20 conversions per month", highlight: false },
         { text: "Popular formats", highlight: false },
         { text: "Standard AI processing", highlight: false },
         { text: "Files auto-deleted after 24h", highlight: false },
         { text: "Community support", highlight: false },
         { text: "Basic features", highlight: false }
-      ],
-      limitations: [
+            ],
+        limitations: [
         "Limited format support",
         "Standard processing speed",
         "No batch conversions"
@@ -232,7 +233,7 @@ function Pricing() {
           <div className="pricing-hero-content">
             <h1>
               {showCampaign ? 'New Year Power Deal' : 'Choose Your Plan'}
-            </h1>
+          </h1>
             {showCampaign && (
               <>
                 <div className="pricing-hero-image">
@@ -251,15 +252,15 @@ function Pricing() {
               </>
             )}
             {!showCampaign && (
-              <p className="hero-subtitle">
+          <p className="hero-subtitle">
                 <>Start free. Upgrade when you need more. <strong>No credit card required to start.</strong></>
-              </p>
+          </p>
             )}
             
             {/* Billing Toggle - Hide during campaign */}
             {!showCampaign && (
               <div className="pricing-toggle-wrapper">
-                <div className="pricing-toggle">
+          <div className="pricing-toggle">
                   <button 
                     className={billingPeriod === 'monthly' ? 'active' : ''}
                     onClick={() => setBillingPeriod('monthly')}
@@ -274,7 +275,7 @@ function Pricing() {
                     <span className="yearly-badge">2 months free</span>
                   </button>
                 </div>
-              </div>
+            </div>
             )}
           </div>
         </div>
@@ -304,7 +305,7 @@ function Pricing() {
                 <div className="plan-header">
                   <div className="plan-icon">{plan.icon}</div>
                   <div className="plan-name-wrapper">
-                    <h3 className="plan-name">{plan.name}</h3>
+                  <h3 className="plan-name">{plan.name}</h3>
                     {plan.tagline && (
                       <p className="plan-tagline">{plan.tagline}</p>
                     )}
@@ -312,10 +313,10 @@ function Pricing() {
                   <div className="plan-price">
                     <span className="price">{plan.price}</span>
                     <span className="period">{plan.period}</span>
-                    {plan.savings && (
+                  {plan.savings && (
                       <span className="savings-badge-inline">{plan.savings}</span>
-                    )}
-                  </div>
+                  )}
+                </div>
                 </div>
 
                 <p className="plan-description">
@@ -362,11 +363,11 @@ function Pricing() {
             <div className="reassurance-item">
               <CheckCircle2 size={20} />
               <span>Cancel anytime</span>
-            </div>
+              </div>
             <div className="reassurance-item">
               <CheckCircle2 size={20} />
               <span>No card for Free</span>
-            </div>
+              </div>
           </div>
         </div>
       </section>
@@ -484,6 +485,7 @@ function Pricing() {
         </div>
       </section>
       
+      <Footer />
       <BackToTop />
       
       <PlanFeaturesModal

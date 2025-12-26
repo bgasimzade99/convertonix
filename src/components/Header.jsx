@@ -41,6 +41,13 @@ function Header({ darkMode, onToggleDarkMode, onShowHistory, onShowPricing, onSh
           >
             About
           </Link>
+          <Link 
+            to="/blog" 
+            className={location.pathname === '/blog' || location.pathname.startsWith('/blog/') ? 'active' : ''}
+            aria-current={location.pathname === '/blog' || location.pathname.startsWith('/blog/') ? 'page' : undefined}
+          >
+            Blog
+          </Link>
           
               <button 
                 className="icon-btn ai-btn"

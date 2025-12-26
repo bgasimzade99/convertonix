@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Particles from '../components/Particles'
 import BackToTop from '../components/BackToTop'
+import Footer from '../components/Footer'
 
 function Refund() {
   return (
@@ -151,6 +152,7 @@ function Refund() {
         </div>
       </section>
       
+      <Footer />
       <BackToTop />
     </div>
   )

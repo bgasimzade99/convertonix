@@ -20,6 +20,7 @@ import {
 } from 'lucide-react'
 import Particles from '../components/Particles'
 import BackToTop from '../components/BackToTop'
+import Footer from '../components/Footer'
 
 function Support() {
   const [toast, setToast] = useState(null)
@@ -415,6 +416,7 @@ function Support() {
         </div>
       )}
       
+      <Footer />
       <BackToTop />
     </div>
   )
