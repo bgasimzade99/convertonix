@@ -195,7 +195,7 @@ function Pricing() {
     },
     {
       question: "Do you offer refunds?",
-      answer: "Yes, we offer a 30-day money-back guarantee. If you're not satisfied, we'll refund your payment in full — no questions asked."
+      answer: "Yes, we have a mandatory refund policy with a minimum guarantee of 14 days. If you're not satisfied within the refund period, we'll refund your payment in full — no questions asked. All refunds are processed by Paddle, our merchant of record."
     },
     {
       question: "Can I upgrade or downgrade my plan?",
@@ -444,8 +444,8 @@ function Pricing() {
             </div>
             <div className="trust-item">
               <Sparkles size={24} />
-              <h4>30-day money-back guarantee</h4>
-              <p>Not satisfied? Get a full refund within 30 days — no questions asked.</p>
+              <h4>14-day minimum refund guarantee</h4>
+              <p>Not satisfied? We have a mandatory refund policy with a minimum guarantee of 14 days — no questions asked.</p>
             </div>
           </div>
         </div>

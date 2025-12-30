@@ -45,18 +45,22 @@ function Refund() {
 
             <div className="legal-section">
               <h2 className="legal-heading">3. Refund Eligibility</h2>
-              <p className="legal-text">Refund eligibility is determined by Paddle in accordance with their refund policy. Generally, refunds may be available under the following circumstances:</p>
+              <p className="legal-text">
+                <strong>We have a mandatory refund policy with a minimum guarantee of 14 days from the date of purchase.</strong> Refund eligibility is determined by Paddle in accordance with their refund policy, which meets or exceeds our 14-day minimum guarantee. Generally, refunds may be available under the following circumstances:
+              </p>
               
               <h3 className="legal-subheading">3.1. Subscription Refunds</h3>
               <ul className="legal-list">
-                <li>Refund requests must typically be made within a specified timeframe from the date of purchase or renewal (as determined by Paddle's policy)</li>
+                <li><strong>Minimum 14-day guarantee:</strong> All subscription purchases are eligible for a full refund if requested within at least 14 days from the date of purchase or renewal</li>
+                <li>Refund requests must be made within the applicable timeframe (minimum 14 days, as determined by Paddle's policy)</li>
                 <li>Eligibility may vary depending on the type of subscription (monthly, yearly, or promotional plans)</li>
                 <li>Refunds are generally provided on a pro-rated basis for unused portions of the subscription period</li>
               </ul>
 
               <h3 className="legal-subheading">3.2. One-Time Purchases</h3>
               <ul className="legal-list">
-                <li>One-time purchases may be eligible for refunds if requested within the timeframe specified by Paddle's policy</li>
+                <li><strong>Minimum 14-day guarantee:</strong> All one-time purchases are eligible for a full refund if requested within at least 14 days from the date of purchase</li>
+                <li>One-time purchases may be eligible for refunds if requested within the timeframe specified by Paddle's policy (minimum 14 days)</li>
                 <li>Eligibility depends on the nature of the purchase and Paddle's refund criteria</li>
               </ul>
 
